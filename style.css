@@ -10,6 +10,8 @@
     --info-color: #17a2b8;
     --milk-color: rgba(255, 255, 255, 0.8);
     --transparent-black: rgba(0, 0, 0, 0.7);
+    --ocean-blue: linear-gradient(135deg, #0077b6 0%, #00b4d8 50%, #90e0ef 100%);
+    --glass-effect: rgba(255, 255, 255, 0.1);
 }
 
 * {
@@ -21,8 +23,8 @@
 
 body {
     line-height: 1.6;
-    background-color: var(--milk-color);
     color: #333;
+    min-height: 100vh;
 }
 
 .container {
@@ -35,28 +37,33 @@ body {
     display: inline-block;
     background: var(--primary-color);
     color: #333;
-    padding: 10px 20px;
+    padding: 12px 24px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
     text-decoration: none;
     font-size: 16px;
+    font-weight: 600;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .btn:hover {
     background: #e0a800;
     transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .btn-sm {
-    padding: 5px 10px;
+    padding: 8px 16px;
     font-size: 14px;
 }
 
 .btn:disabled {
     background: #ccc;
     cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
 }
 
 .hidden {
@@ -65,102 +72,180 @@ body {
 
 /* Form Styles */
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     font-weight: bold;
+    color: #333;
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
     font-size: 16px;
+    transition: border-color 0.3s ease;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
 }
 
 /* Card Styles */
 .card {
     background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-bottom: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    margin-bottom: 25px;
+    backdrop-filter: blur(10px);
 }
 
-/* Page Specific Styles */
+/* ==================== */
+/* OCEAN BLUE BACKGROUND */
+/* ==================== */
+
 .register-page {
-    background: rgba(255, 193, 7, 0.2);
+    background: var(--ocean-blue);
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.register-page::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="waves" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse"><path fill="rgba(255,255,255,0.1)" d="M0 50 L100 50 L100 100 L0 100 Z" /><path fill="rgba(255,255,255,0.2)" d="M0 0 L100 0 L100 50 L0 50 Z"/></pattern></defs><rect width="100" height="100" fill="url(%23waves)"/></svg>');
+    opacity: 0.3;
 }
 
 .login-page {
-    background: rgba(255, 193, 7, 0.2);
+    background: var(--ocean-blue);
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.login-page::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="bubbles" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="8" fill="rgba(255,255,255,0.1)"/><circle cx="60" cy="60" r="12" fill="rgba(255,255,255,0.2)"/><circle cx="80" cy="20" r="6" fill="rgba(255,255,255,0.15)"/></pattern></defs><rect width="100" height="100" fill="url(%23bubbles)"/></svg>');
+    opacity: 0.2;
 }
 
 .forgot-page {
-    background: rgba(255, 193, 7, 0.2);
+    background: var(--ocean-blue);
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
 }
 
 .register-form,
 .login-form,
 .forgot-form {
-    background: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    background: var(--glass-effect);
+    backdrop-filter: blur(20px);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 500px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    z-index: 1;
 }
 
 .register-form h2,
 .login-form h2,
 .forgot-form h2 {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     text-align: center;
-    color: var(--dark-color);
+    color: white;
+    font-size: 28px;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .register-form p,
 .login-form p,
 .forgot-form p {
     text-align: center;
-    margin-top: 15px;
+    margin-top: 20px;
+    color: white;
 }
 
 .register-form a,
 .login-form a,
 .forgot-form a {
-    color: var(--secondary-color);
+    color: var(--primary-color);
     text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
 }
 
 .register-form a:hover,
 .login-form a:hover,
 .forgot-form a:hover {
+    color: #ffd54f;
     text-decoration: underline;
 }
+
+/* Glassmorphism effect for form inputs */
+.register-form .form-group input,
+.login-form .form-group input,
+.forgot-form .form-group input {
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: #333;
+}
+
+.register-form .form-group input:focus,
+.login-form .form-group input:focus,
+.forgot-form .form-group input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.2);
+}
+
+/* ==================== */
+/* REMAINING STYLES (SAME AS BEFORE) */
+/* ==================== */
 
 /* Home Page Styles */
 .home-page {
     display: flex;
     min-height: 100vh;
+    background: var(--milk-color);
 }
 
 .sidebar {
@@ -269,8 +354,9 @@ header {
     background: var(--transparent-black);
     color: white;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
 }
 
 .stat-card h3 {
@@ -304,9 +390,10 @@ header {
     background: var(--transparent-black);
     color: white;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     text-align: center;
+    backdrop-filter: blur(10px);
 }
 
 .action-card h3 {
@@ -322,8 +409,9 @@ header {
     background: var(--transparent-black);
     color: white;
     padding: 15px;
-    border-radius: 10px;
+    border-radius: 15px;
     overflow: hidden;
+    backdrop-filter: blur(10px);
 }
 
 .marquee p {
@@ -340,7 +428,8 @@ header {
     background: var(--transparent-black);
     color: white;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
 }
 
 .notification h3 {
@@ -353,7 +442,8 @@ header {
     background: var(--transparent-black);
     color: white;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
 }
 
 .recharge-container h2 {
@@ -375,10 +465,11 @@ header {
 .method {
     background: rgba(255, 255, 255, 0.1);
     padding: 15px;
-    border-radius: 10px;
+    border-radius: 15px;
     text-align: center;
     cursor: pointer;
     transition: all 0.3s;
+    backdrop-filter: blur(10px);
 }
 
 .method:hover {
@@ -395,8 +486,9 @@ header {
 .payment-info {
     background: rgba(255, 255, 255, 0.1);
     padding: 15px;
-    border-radius: 10px;
+    border-radius: 15px;
     margin-bottom: 20px;
+    backdrop-filter: blur(10px);
 }
 
 .product-grid {
@@ -409,25 +501,28 @@ header {
 .product {
     background: rgba(255, 255, 255, 0.1);
     padding: 15px;
-    border-radius: 10px;
+    border-radius: 15px;
     text-align: center;
+    backdrop-filter: blur(10px);
 }
 
 .product img {
     width: 100%;
     height: 150px;
     object-fit: cover;
-    border-radius: 5px;
+    border-radius: 10px;
     margin-bottom: 10px;
 }
 
 .product h4 {
     margin-bottom: 5px;
+    color: white;
 }
 
 .product p {
     margin-bottom: 10px;
     font-size: 14px;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 /* Modal Styles */
@@ -442,16 +537,18 @@ header {
     align-items: center;
     justify-content: center;
     z-index: 1000;
+    backdrop-filter: blur(5px);
 }
 
 .modal-content {
     background: white;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 15px;
     width: 90%;
     max-width: 500px;
     max-height: 90vh;
     overflow-y: auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
 .modal h3 {
@@ -464,7 +561,8 @@ header {
     background: var(--transparent-black);
     color: white;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
 }
 
 .withdraw-container h2 {
@@ -475,16 +573,18 @@ header {
 .alert {
     background: rgba(255, 193, 7, 0.2);
     padding: 15px;
-    border-radius: 10px;
+    border-radius: 15px;
     text-align: center;
     margin-bottom: 20px;
+    backdrop-filter: blur(10px);
 }
 
 #bankInfoDisplay {
     background: rgba(255, 255, 255, 0.1);
     padding: 15px;
-    border-radius: 10px;
+    border-radius: 15px;
     margin-bottom: 20px;
+    backdrop-filter: blur(10px);
 }
 
 /* Transaction History Styles */
@@ -492,7 +592,8 @@ header {
     background: var(--transparent-black);
     color: white;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
 }
 
 .transaction-container h2 {
@@ -513,6 +614,7 @@ header {
     color: white;
     cursor: pointer;
     position: relative;
+    transition: all 0.3s ease;
 }
 
 .tab-btn.active {
@@ -557,7 +659,8 @@ table th {
     background: var(--transparent-black);
     color: white;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
 }
 
 .account-container h2 {
@@ -575,8 +678,9 @@ table th {
 .account-info {
     background: rgba(255, 255, 255, 0.1);
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 15px;
     margin-bottom: 30px;
+    backdrop-filter: blur(10px);
 }
 
 .account-info h3 {
@@ -586,6 +690,7 @@ table th {
 
 .account-info p {
     margin-bottom: 10px;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .guidelines {
@@ -595,13 +700,18 @@ table th {
 .guideline-item {
     background: rgba(255, 255, 255, 0.1);
     padding: 15px;
-    border-radius: 10px;
+    border-radius: 15px;
     margin-bottom: 15px;
+    backdrop-filter: blur(10px);
 }
 
 .guideline-item h4 {
     margin-bottom: 10px;
     color: var(--primary-color);
+}
+
+.guideline-item p {
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .whatsapp-btn {
@@ -613,6 +723,13 @@ table th {
     width: 100%;
     padding: 15px;
     font-size: 18px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.whatsapp-btn:hover {
+    background: #128C7E;
+    transform: translateY(-2px);
 }
 
 .whatsapp-btn i {
@@ -630,8 +747,9 @@ table th {
 .investment-plan {
     background: rgba(255, 255, 255, 0.1);
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 15px;
     text-align: center;
+    backdrop-filter: blur(10px);
 }
 
 .investment-plan h3 {
@@ -641,6 +759,7 @@ table th {
 
 .investment-plan p {
     margin-bottom: 15px;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .countdown {
@@ -662,6 +781,11 @@ table th {
 .invitation-link input {
     flex: 1;
     margin-right: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    padding: 10px;
+    color: #333;
 }
 
 .share-buttons {
@@ -674,21 +798,22 @@ table th {
 .share-btn {
     padding: 10px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     color: white;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.3s;
-}
-
-.share-btn i {
-    margin-right: 5px;
+    font-weight: 600;
 }
 
 .share-btn:hover {
     transform: translateY(-2px);
+}
+
+.share-btn i {
+    margin-right: 5px;
 }
 
 .whatsapp {
@@ -714,8 +839,9 @@ table th {
 .team-section {
     background: rgba(255, 255, 255, 0.1);
     padding: 15px;
-    border-radius: 10px;
+    border-radius: 15px;
     margin-bottom: 15px;
+    backdrop-filter: blur(10px);
 }
 
 .team-section h4 {
@@ -725,6 +851,7 @@ table th {
 
 .team-section p {
     margin-bottom: 10px;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .view-team-btn {
@@ -736,12 +863,13 @@ table th {
 .task-notification {
     background: rgba(255, 193, 7, 0.2);
     padding: 15px;
-    border-radius: 10px;
+    border-radius: 15px;
     text-align: center;
     margin-bottom: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    backdrop-filter: blur(10px);
 }
 
 .order-items {
@@ -753,7 +881,8 @@ table th {
 .order-item {
     background: rgba(255, 255, 255, 0.1);
     padding: 15px;
-    border-radius: 10px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
 }
 
 .progress-bar {
@@ -784,9 +913,10 @@ table th {
 .admin-login .login-form {
     background: var(--transparent-black);
     padding: 30px;
-    border-radius: 10px;
+    border-radius: 15px;
     width: 100%;
     max-width: 500px;
+    backdrop-filter: blur(20px);
 }
 
 .admin-login h2 {
@@ -872,7 +1002,8 @@ table th {
 .admin-stat-card {
     background: rgba(255, 255, 255, 0.1);
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
 }
 
 .admin-stat-card h3 {
@@ -909,8 +1040,9 @@ table th {
 .notification-editor {
     background: rgba(255, 255, 255, 0.1);
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 15px;
     margin-bottom: 20px;
+    backdrop-filter: blur(10px);
 }
 
 .task-editor h3,
@@ -968,5 +1100,12 @@ table th {
     .admin-main {
         margin-left: 0;
         width: 100%;
+    }
+    
+    .register-form,
+    .login-form,
+    .forgot-form {
+        padding: 25px;
+        margin: 15px;
     }
 }

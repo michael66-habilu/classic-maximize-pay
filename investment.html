@@ -111,11 +111,25 @@
                     </form>
                     <button class="btn claim-btn hidden" data-id="5">Claim Profit</button>
                 </div>
+                  <div class="investment-plan">
+                    <h3>180% Profit in 365 Days</h3>
+                    <p>Investment Range: 1,000,000 - 100,000,000 TZS</p>
+                    <div class="countdown hidden" id="countdown5">
+                        <p>Time remaining: <span id="time5">365 days</span></p>
+                    </div>
+                    <form class="investment-form" data-id="5">
+                        <div class="form-group">
+                            <input type="number" placeholder="Amount (TZS)" min="1000000" max="100000000" required>
+                        </div>
+                        <button type="submit" class="btn">Invest</button>
+                    </form>
+                    <button class="btn claim-btn hidden" data-id="5">Claim Profit</button>
+                </div>
             </div>
         </div>
     </div>
     
     <script src="js/investment.js"></script>
-    <script src="js/utils.js"></script>
+      <script src="js/utils.js"></script>
 </body>
 </html>

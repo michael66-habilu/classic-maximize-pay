@@ -1,58 +1,57 @@
-document.addEventListener('DOMContentLoaded', async () => {
-    // Load affiliate data
+const express = require('express');
+const router = express.Router();
+const auth = require('../middleware/auth');
+const User = require('../models/User');
+const { check, validationResult } = require('express-validator');
+
+// @route   GET api/affiliate
+// @desc    Get affiliate data
+// @access  Private
+router.get('/', auth, async (req, res) => {
     try {
-        const response = await makeRequest('/affiliate');
-        const data = await response.json();
+        const user = await User.findById(req.user.id).select('referralCode');
         
-        if (response.ok) {
-            // Update team counts
-            if (document.getElementById('teamOneCount')) {
-                document.getElementById('teamOneCount').textContent = data.teamOne.count || 0;
+        // In a real app, you would calculate team counts and earnings
+        const affiliateData = {
+            referralCode: user.referralCode,
+            teamOne: {
+                count: 5,
+                earnings: 15000
+            },
+            teamTwo: {
+                count: 12,
+                earnings: 3600
+            },
+            teamThree: {
+                count: 25,
+                earnings: 2500
             }
-            
-            if (document.getElementById('teamOneEarnings')) {
-                document.getElementById('teamOneEarnings').textContent = formatCurrency(data.teamOne.earnings || 0);
-            }
-            
-            if (document.getElementById('teamTwoCount')) {
-                document.getElementById('teamTwoCount').textContent = data.teamTwo.count || 0;
-            }
-            
-            if (document.getElementById('teamTwoEarnings')) {
-                document.getElementById('teamTwoEarnings').textContent = formatCurrency(data.teamTwo.earnings || 0);
-            }
-            
-            if (document.getElementById('teamThreeCount')) {
-                document.getElementById('teamThreeCount').textContent = data.teamThree.count || 0;
-            }
-            
-            if (document.getElementById('teamThreeEarnings')) {
-                document.getElementById('teamThreeEarnings').textContent = formatCurrency(data.teamThree.earnings || 0);
-            }
-            
-            // Set invitation link with user's referral code
-            if (document.getElementById('inviteLink')) {
-                const inviteLink = `https://classic-maximize-pay.com/register?ref=${data.referralCode}`;
-                document.getElementById('inviteLink').value = inviteLink;
-            }
-        }
-    } catch (error) {
-        console.error('Failed to load affiliate data:', error);
+        };
+
+        res.json(affiliateData);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ message: 'Server error' });
     }
-    
-    // Share buttons
-    document.addEventListener('click', (e) => {
-        if (e.target.classList.contains('share-btn')) {
-            const platform = e.target.classList.contains('whatsapp') ? 'WhatsApp' :
-                           e.target.classList.contains('facebook') ? 'Facebook' :
-                           e.target.classList.contains('instagram') ? 'Instagram' :
-                           e.target.classList.contains('tiktok') ? 'TikTok' : 'Telegram';
-            
-            const inviteLink = document.getElementById('inviteLink').value;
-            const message = `Join CLASSIC-MAXIMIZE PAY using my referral link: ${inviteLink}`;
-            
-            // In a real app, you would use platform-specific sharing APIs
-            alert(`Sharing to ${platform}: ${message}`);
-        }
-    });
 });
+
+// @route   GET api/affiliate/team/:level
+// @desc    Get team members by level
+// @access  Private
+router.get('/team/:level', auth, async (req, res) => {
+    try {
+        // In a real app, you would query the database for team members
+        // This is a simplified version for demo
+        const teamMembers = [
+            { username: 'user1', phone: '255123456789', joinedDate: new Date() },
+            { username: 'user2', phone: '255987654321', joinedDate: new Date() }
+        ];
+
+        res.json(teamMembers);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+module.exports = router;
