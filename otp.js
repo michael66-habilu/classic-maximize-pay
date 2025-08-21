@@ -12,7 +12,8 @@ const otpStore = new Map();
 function storeOTP(username, otp) {
     otpStore.set(username, {
         otp: otp,
-        expiresAt: Date.now() + OTP_EXPIRY_TIME
+        expiresAt: Date.now() + OTP_EXPIRY_TIME,
+        createdAt: Date.now()
     });
     
     // Auto-cleanup after expiry
@@ -21,6 +22,8 @@ function storeOTP(username, otp) {
             otpStore.delete(username);
         }
     }, OTP_EXPIRY_TIME);
+    
+    return true;
 }
 
 // Verify OTP
@@ -53,10 +56,24 @@ function getOTPExpiryTime(username) {
     return Math.max(0, storedData.expiresAt - Date.now());
 }
 
+// Cleanup expired OTPs
+function cleanupExpiredOTPs() {
+    const now = Date.now();
+    for (const [username, data] of otpStore.entries()) {
+        if (now > data.expiresAt) {
+            otpStore.delete(username);
+        }
+    }
+}
+
+// Run cleanup every hour
+setInterval(cleanupExpiredOTPs, 60 * 60 * 1000);
+
 module.exports = {
     generateOTP,
     storeOTP,
     verifyOTP,
     getOTPExpiryTime,
-    OTP_EXPIRY_TIME
+    OTP_EXPIRY_TIME,
+    cleanupExpiredOTPs
 };
