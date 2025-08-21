@@ -4,14 +4,14 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const config = require('./backend/config');
-const authRoutes = require('.backend/routes/auth');
-const rechargeRoutes = require('./backend/routes/recharge');
-const withdrawRoutes = require('./backend/routes/withdraw');
-const investmentRoutes = require('./backend/routes/investment');
-const affiliateRoutes = require('./backend/routes/affiliate');
-const adminRoutes = require('./backend/routes/admin');
-const User = require('./backend/models/User');
+const config = require('./config');
+const authRoutes = require('./routes/auth');
+const rechargeRoutes = require('./routes/recharge');
+const withdrawRoutes = require('./routes/withdraw');
+const investmentRoutes = require('./routes/investment');
+const affiliateRoutes = require('./routes/affiliate');
+const adminRoutes = require('./routes/admin');
+
 const app = express();
 
 // Middleware
