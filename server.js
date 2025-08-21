@@ -22,8 +22,20 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-// Serve static files from the root directory
-app.use(express.static(path.join(__dirname)));
+// ====================
+// STATIC FILE SERVING
+// ====================
+// Serve static files from multiple directories
+app.use(express.static(path.join(__dirname))); // Root files
+app.use('/css', express.static(path.join(__dirname, 'css')));
+app.use('/js', express.static(path.join(__dirname, 'js')));
+app.use('/backend', express.static(path.join(__dirname, 'backend')));
+
+console.log('✅ Static files serving configured:');
+console.log('   - Root directory: ', path.join(__dirname));
+console.log('   - CSS directory: ', path.join(__dirname, 'css'));
+console.log('   - JS directory: ', path.join(__dirname, 'js'));
+console.log('   - Backend directory: ', path.join(__dirname, 'backend'));
 
 // Import and use routes with error handling
 try {
@@ -92,9 +104,12 @@ htmlPages.forEach(page => {
     
     app.get(page, (req, res) => {
         // Check if file exists
-        if (fs.existsSync(path.join(__dirname, filePath))) {
-            res.sendFile(path.join(__dirname, filePath));
+        const fullPath = path.join(__dirname, filePath);
+        if (fs.existsSync(fullPath)) {
+            console.log(`✅ Serving page: ${page} -> ${filePath}`);
+            res.sendFile(fullPath);
         } else {
+            console.log(`❌ Page not found: ${filePath}`);
             res.status(404).send('Page not found');
         }
     });
@@ -104,30 +119,54 @@ console.log('✅ HTML routes configured');
 
 // Database connection
 mongoose.connect(config.mongoURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-.then(() => {
-    console.log('✅ MongoDB connected successfully');
-})
-.catch(err => {
-    console.error('❌ MongoDB connection error:', err.message);
-    console.log('⚠️  Continuing without database connection');
-});
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(() => {
+        console.log('✅ MongoDB connected successfully');
+    })
+    .catch(err => {
+        console.error('❌ MongoDB connection error:', err.message);
+        console.log('⚠️  Continuing without database connection');
+    });
 
 // Basic health check endpoint
 app.get('/api/health', (req, res) => {
-    res.json({ 
-        status: 'OK', 
+    res.json({
+        status: 'OK',
         timestamp: new Date().toISOString(),
-        database: mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected'
+        database: mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected',
+        staticFiles: 'Serving from: ' + __dirname
     });
+});
+
+// Debug endpoint to check static files
+app.get('/api/debug/files', (req, res) => {
+    const checkFiles = [
+        { path: './css/style.css', name: 'CSS File' },
+        { path: './js/utils.js', name: 'JS Utils' },
+        { path: './backend/routes/auth.js', name: 'Auth Routes' },
+        { path: './index.html', name: 'Index HTML' },
+        { path: './register.html', name: 'Register HTML' }
+    ];
+    
+    const results = checkFiles.map(file => {
+        const exists = fs.existsSync(path.join(__dirname, file.path));
+        return {
+            file: file.name,
+            path: file.path,
+            exists: exists,
+            fullPath: path.join(__dirname, file.path)
+        };
+    });
+    
+    res.json({ files: results });
 });
 
 // Error handling middleware
 app.use((err, req, res, next) => {
     console.error('❌ Server error:', err.stack);
-    res.status(500).json({ 
+    res.status(500).json({
         message: 'Something went wrong!',
         error: process.env.NODE_ENV === 'development' ? err.message : 'Internal server error'
     });
@@ -143,7 +182,13 @@ app.use((req, res) => {
     if (req.url.startsWith('/api/')) {
         res.status(404).json({ message: 'API endpoint not found' });
     } else {
-        res.status(404).sendFile(path.join(__dirname, 'index.html'));
+        // Try to serve the requested file directly
+        const requestedFile = path.join(__dirname, req.url);
+        if (fs.existsSync(requestedFile)) {
+            res.sendFile(requestedFile);
+        } else {
+            res.status(404).sendFile(path.join(__dirname, 'index.html'));
+        }
     }
 });
 
@@ -154,10 +199,17 @@ app.listen(PORT, () => {
     console.log(`📍 Port: ${PORT}`);
     console.log(`🌐 URL: http://localhost:${PORT}`);
     console.log(`✅ Health check: http://localhost:${PORT}/api/health`);
+    console.log(`✅ Debug files: http://localhost:${PORT}/api/debug/files`);
     console.log('📋 Available pages:');
     htmlPages.forEach(page => {
         console.log(`   ${page} -> ${page === '/' ? 'index.html' : page + '.html'}`);
     });
+    
+    // Log important URLs for debugging
+    console.log('\n🔍 Debug URLs:');
+    console.log(`   - CSS: http://localhost:${PORT}/css/style.css`);
+    console.log(`   - JS: http://localhost:${PORT}/js/utils.js`);
+    console.log(`   - Register: http://localhost:${PORT}/register.html`);
 });
 
 module.exports = app;

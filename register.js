@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             try {
-                const response = await fetch(`${API_BASE_URL}/auth/register`, {
+                const response = await fetch('/api/auth/register', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -44,11 +44,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     throw new Error(data.message || 'Registration failed');
                 }
                 
-                alert('Registration successful! Please login.');
-                window.location.href = 'login.html';
+                if (data.success) {
+                    // Save token and user data
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    
+                    alert('Registration successful!');
+                    window.location.href = 'home.html';
+                } else {
+                    throw new Error(data.message || 'Registration failed');
+                }
             } catch (error) {
                 console.error('Registration error:', error);
-                alert(error.message);
+                alert('Error: ' + error.message);
             }
         });
     }

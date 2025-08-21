@@ -1,51 +1,69 @@
-const express = require('express');
-const router = express.Router();
-
-// Mock recharge requests
-const rechargeRequests = [];
-let requestIdCounter = 1;
-
-// @route   POST api/recharge
-// @desc    Create recharge request
-// @access  Public
-router.post('/', (req, res) => {
-    try {
-        const { amount, method, transactionId } = req.body;
-        
-        if (!amount || !method || !transactionId) {
-            return res.status(400).json({ message: 'All fields are required' });
-        }
-        
-        const request = {
-            id: requestIdCounter++,
-            amount,
-            method,
-            transactionId,
-            status: 'pending',
-            createdAt: new Date()
-        };
-        
-        rechargeRequests.push(request);
-        
-        res.json({
-            message: 'Recharge request submitted successfully',
-            request
+document.addEventListener('DOMContentLoaded', () => {
+    const paymentMethods = document.querySelectorAll('.method');
+    const paymentDetails = document.getElementById('paymentDetails');
+    const productsSection = document.getElementById('productsSection');
+    const transactionModal = document.getElementById('transactionModal');
+    
+    // Payment method selection
+    paymentMethods.forEach(method => {
+        method.addEventListener('click', () => {
+            const methodName = method.getAttribute('data-method');
+            document.getElementById('selectedMethod').textContent = methodName.toUpperCase();
+            
+            // Set payment number based on method (in a real app, this would come from backend)
+            let paymentNumber = '';
+            switch(methodName) {
+                case 'mpesa':
+                    paymentNumber = '1234567890';
+                    break;
+                case 'selcom':
+                    paymentNumber = '9876543210';
+                    break;
+                default:
+                    paymentNumber = '1112223333';
+            }
+            
+            document.getElementById('paymentNumber').textContent = paymentNumber;
+            paymentDetails.classList.remove('hidden');
+            productsSection.classList.add('hidden');
         });
-        
-    } catch (error) {
-        console.error('Recharge error:', error);
-        res.status(500).json({ message: 'Server error' });
+    });
+    
+    // Recharge form submission
+    const rechargeForm = document.getElementById('rechargeForm');
+    if (rechargeForm) {
+        rechargeForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            paymentDetails.classList.add('hidden');
+            productsSection.classList.remove('hidden');
+        });
+    }
+    
+    // Purchase button click
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('purchase-btn')) {
+            const productId = e.target.getAttribute('data-id');
+            transactionModal.classList.remove('hidden');
+        }
+    });
+    
+    // Transaction form submission
+    const transactionForm = document.getElementById('transactionForm');
+    if (transactionForm) {
+        transactionForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const transactionId = document.getElementById('transactionId').value;
+            
+            try {
+                // In a real app, you would send this to your backend
+                alert('Recharge request submitted successfully! Please wait for admin approval.');
+                transactionModal.classList.add('hidden');
+                window.location.href = 'home.html';
+            } catch (error) {
+                console.error('Transaction submission error:', error);
+                alert('Failed to submit transaction: ' + error.message);
+            }
+        });
     }
 });
-
-// @route   GET api/recharge/history
-// @desc    Get recharge history
-// @access  Public
-router.get('/history', (req, res) => {
-    res.json({
-        count: rechargeRequests.length,
-        requests: rechargeRequests
-    });
-});
-
-module.exports = router;

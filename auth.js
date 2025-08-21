@@ -1,52 +1,189 @@
+const express = require('express');
+const router = express.Router();
 const jwt = require('jsonwebtoken');
-const config = require('../config');
+const bcrypt = require('bcryptjs');
+const User = require('../models/User');
 
-// Middleware to verify JWT for regular users
-const auth = (req, res, next) => {
-    // Get token from header
-    const token = req.header('x-auth-token') || req.header('Authorization')?.replace('Bearer ', '');
-
-    // Check if no token
-    if (!token) {
-        return res.status(401).json({ message: 'No token, authorization denied' });
-    }
-
-    // Verify token
-    try {
-        const decoded = jwt.verify(token, config.jwtSecret);
-        req.user = decoded.user;
-        next();
-    } catch (err) {
-        console.error('Token verification error:', err.message);
-        res.status(401).json({ message: 'Token is not valid' });
-    }
+// Simple config
+const config = {
+    jwtSecret: process.env.JWT_SECRET || 'fallback_secret_2024'
 };
 
-// Middleware to verify JWT for admin users
-const adminAuth = (req, res, next) => {
-    // Get token from header
-    const token = req.header('x-auth-token') || req.header('Authorization')?.replace('Bearer ', '');
-
-    // Check if no token
-    if (!token) {
-        return res.status(401).json({ message: 'No token, authorization denied' });
-    }
-
-    // Verify token
+// @route   POST api/auth/register
+// @desc    Register user
+// @access  Public
+router.post('/register', async (req, res) => {
     try {
-        const decoded = jwt.verify(token, config.jwtSecret);
-        
-        // Check if user is admin (you need to implement this check based on your user model)
-        if (decoded.user.role !== 'admin') {
-            return res.status(403).json({ message: 'Admin access required' });
+        const { fullName, username, email, phone, password } = req.body;
+
+        console.log('Registration attempt:', { username, email });
+
+        // Validation
+        if (!fullName || !username || !email || !phone || !password) {
+            return res.status(400).json({ message: 'All fields are required' });
         }
-        
-        req.admin = decoded.user;
-        next();
-    } catch (err) {
-        console.error('Admin token verification error:', err.message);
-        res.status(401).json({ message: 'Token is not valid' });
-    }
-};
 
-module.exports = { auth, adminAuth };
+        if (password.length < 6) {
+            return res.status(400).json({ message: 'Password must be at least 6 characters' });
+        }
+
+        // Check if user exists
+        const existingUser = await User.findOne({
+            $or: [{ email }, { username }]
+        });
+
+        if (existingUser) {
+            return res.status(400).json({ message: 'User already exists' });
+        }
+
+        // Hash password
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+        // Create user
+        const user = new User({
+            fullName,
+            username,
+            email,
+            phone,
+            password: hashedPassword,
+            referralCode: Math.random().toString(36).substring(2, 10).toUpperCase()
+        });
+
+        // Save to database
+        await user.save();
+        console.log('User saved to database:', user.username);
+
+        // Create JWT token
+        const token = jwt.sign(
+            { 
+                user: {
+                    id: user._id,
+                    username: user.username
+                }
+            },
+            config.jwtSecret,
+            { expiresIn: '30d' }
+        );
+
+        // Return success
+        res.json({
+            success: true,
+            message: 'Registration successful',
+            token,
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email,
+                phone: user.phone,
+                fullName: user.fullName
+            }
+        });
+
+    } catch (error) {
+        console.error('Registration error:', error);
+        res.status(500).json({ 
+            success: false,
+            message: 'Server error: ' + error.message 
+        });
+    }
+});
+
+// @route   POST api/auth/login
+// @desc    Login user
+// @access  Public
+router.post('/login', async (req, res) => {
+    try {
+        const { username, password } = req.body;
+
+        console.log('Login attempt:', { username });
+
+        // Validation
+        if (!username || !password) {
+            return res.status(400).json({ message: 'Username and password are required' });
+        }
+
+        // Find user
+        const user = await User.findOne({ username });
+        if (!user) {
+            return res.status(400).json({ message: 'Invalid credentials' });
+        }
+
+        // Check password
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+            return res.status(400).json({ message: 'Invalid credentials' });
+        }
+
+        // Create JWT token
+        const token = jwt.sign(
+            { 
+                user: {
+                    id: user._id,
+                    username: user.username
+                }
+            },
+            config.jwtSecret,
+            { expiresIn: '30d' }
+        );
+
+        // Return success
+        res.json({
+            success: true,
+            message: 'Login successful',
+            token,
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email,
+                phone: user.phone,
+                fullName: user.fullName,
+                balance: user.balance
+            }
+        });
+
+    } catch (error) {
+        console.error('Login error:', error);
+        res.status(500).json({ 
+            success: false,
+            message: 'Server error: ' + error.message 
+        });
+    }
+});
+
+// @route   GET api/auth/check
+// @desc    Check if user is logged in
+// @access  Public
+router.get('/check', async (req, res) => {
+    try {
+        const token = req.header('x-auth-token');
+        
+        if (!token) {
+            return res.json({ isLoggedIn: false });
+        }
+
+        const decoded = jwt.verify(token, config.jwtSecret);
+        const user = await User.findById(decoded.user.id).select('-password');
+        
+        if (!user) {
+            return res.json({ isLoggedIn: false });
+        }
+
+        res.json({
+            isLoggedIn: true,
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email,
+                phone: user.phone,
+                fullName: user.fullName,
+                balance: user.balance
+            }
+        });
+
+    } catch (error) {
+        res.json({ isLoggedIn: false });
+    }
+});
+
+module.exports = router;
