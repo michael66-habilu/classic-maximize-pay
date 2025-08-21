@@ -1,59 +1,69 @@
-const express = require('express');
-const router = express.Router();
-const auth = require('../middleware/auth');
-const User = require('../models/User');
-const RechargeRequest = require('../models/RechargeRequest');
-const { check, validationResult } = require('express-validator');
-
-// @route   POST api/recharge
-// @desc    Create recharge request
-// @access  Private
-router.post('/', [
-    auth,
-    [
-        check('amount', 'Amount is required').isNumeric(),
-        check('method', 'Payment method is required').not().isEmpty(),
-        check('transactionId', 'Transaction ID is required').not().isEmpty()
-    ]
-], async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
-
-    const { amount, method, transactionId } = req.body;
-
-    try {
-        // Create recharge request
-        const rechargeRequest = new RechargeRequest({
-            user: req.user.id,
-            amount,
-            method,
-            transactionId
+document.addEventListener('DOMContentLoaded', () => {
+    const paymentMethods = document.querySelectorAll('.method');
+    const paymentDetails = document.getElementById('paymentDetails');
+    const productsSection = document.getElementById('productsSection');
+    const transactionModal = document.getElementById('transactionModal');
+    
+    // Payment method selection
+    paymentMethods.forEach(method => {
+        method.addEventListener('click', () => {
+            const methodName = method.getAttribute('data-method');
+            document.getElementById('selectedMethod').textContent = methodName.toUpperCase();
+            
+            // Set payment number based on method (in a real app, this would come from backend)
+            let paymentNumber = '';
+            switch(methodName) {
+                case 'mpesa':
+                    paymentNumber = '1234567890';
+                    break;
+                case 'selcom':
+                    paymentNumber = '9876543210';
+                    break;
+                default:
+                    paymentNumber = '1112223333';
+            }
+            
+            document.getElementById('paymentNumber').textContent = paymentNumber;
+            paymentDetails.classList.remove('hidden');
+            productsSection.classList.add('hidden');
         });
-
-        await rechargeRequest.save();
-
-        res.json(rechargeRequest);
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).json({ message: 'Server error' });
+    });
+    
+    // Recharge form submission
+    const rechargeForm = document.getElementById('rechargeForm');
+    if (rechargeForm) {
+        rechargeForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            paymentDetails.classList.add('hidden');
+            productsSection.classList.remove('hidden');
+        });
+    }
+    
+    // Purchase button click
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('purchase-btn')) {
+            const productId = e.target.getAttribute('data-id');
+            transactionModal.classList.remove('hidden');
+        }
+    });
+    
+    // Transaction form submission
+    const transactionForm = document.getElementById('transactionForm');
+    if (transactionForm) {
+        transactionForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const transactionId = document.getElementById('transactionId').value;
+            
+            try {
+                // In a real app, you would send this to your backend
+                alert('Recharge request submitted successfully! Please wait for admin approval.');
+                transactionModal.classList.add('hidden');
+                window.location.href = 'home.html';
+            } catch (error) {
+                console.error('Transaction submission error:', error);
+                alert('Failed to submit transaction: ' + error.message);
+            }
+        });
     }
 });
-
-// @route   GET api/recharge/history
-// @desc    Get user's recharge history
-// @access  Private
-router.get('/history', auth, async (req, res) => {
-    try {
-        const rechargeHistory = await RechargeRequest.find({ user: req.user.id })
-            .sort({ createdAt: -1 });
-
-        res.json(rechargeHistory);
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).json({ message: 'Server error' });
-    }
-});
-
-module.exports = router;
