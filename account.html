@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account - CLASSIC-MAXIMIZE PAY</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body class="account-page">
+    <div class="sidebar">
+        <div class="logo">CLASSIC-MAXIMIZE PAY</div>
+        <ul class="menu">
+            <li><a href="home.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="account.html"><i class="fas fa-user"></i> My Account</a></li>
+            <li><a href="affiliate.html"><i class="fas fa-users"></i> Affiliate</a></li>
+            <li><a href="investment.html"><i class="fas fa-chart-line"></i> Investment Grid</a></li>
+            <li><a href="orders.html"><i class="fas fa-shopping-bag"></i> Purchased Orders</a></li>
+            <li><a href="recharge.html"><i class="fas fa-money-bill-wave"></i> Recharge</a></li>
+            <li><a href="withdraw.html"><i class="fas fa-wallet"></i> Withdraw</a></li>
+            <li><a href="transaction.html"><i class="fas fa-history"></i> Transaction History</a></li>
+        </ul>
+    </div>
+    
+    <div class="main-content">
+        <header>
+            <div class="header-left">
+                <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+                <a href="home.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+            </div>
+            <div class="header-right">
+                <button id="logoutBtn" class="btn btn-sm">Logout</button>
+            </div>
+        </header>
+        
+        <div class="account-container">
+            <h2>My Account</h2>
+            
+            <div class="account-stats">
+                <div class="stat-card">
+                    <h3>Daily Earnings</h3>
+                    <p id="dailyEarningsStat">0 TZS</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Weekly Earnings</h3>
+                    <p id="weeklyEarningsStat">0 TZS</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Monthly Earnings</h3>
+                    <p id="monthlyEarningsStat">0 TZS</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Yearly Earnings</h3>
+                    <p id="yearlyEarningsStat">0 TZS</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Profit</h3>
+                    <p id="totalProfitStat">0 TZS</p>
+                </div>
+            </div>
+            
+            <div class="account-info">
+                <h3>Account Information</h3>
+                <p><strong>Full Name:</strong> <span id="accountFullName"></span></p>
+                <p><strong>Username:</strong> <span id="accountUsername"></span></p>
+                <p><strong>Email:</strong> <span id="accountEmail"></span></p>
+                <p><strong>Phone:</strong> <span id="accountPhone"></span></p>
+                <p><strong>Joined Date:</strong> <span id="accountJoinedDate"></span></p>
+            </div>
+            
+            <div class="guidelines">
+                <h3>Account Guidelines</h3>
+                <div class="guideline-item">
+                    <h4>1. How to Recharge</h4>
+                    <p>Go to Recharge page, select payment method, enter amount and complete payment.</p>
+                </div>
+                <div class="guideline-item">
+                    <h4>2. How to Withdraw</h4>
+                    <p>Connect your bank account first, then you can withdraw your earnings.</p>
+                </div>
+                <div class="guideline-item">
+                    <h4>3. How to Take an Invitation Link</h4>
+                    <p>Go to Affiliate page and share your unique invitation link with friends.</p>
+                </div>
+                <div class="guideline-item">
+                    <h4>4. How to Invest</h4>
+                    <p>Choose an investment plan from Investment Grid and follow the steps.</p>
+                </div>
+                <div class="guideline-item">
+                    <h4>5. How to Purchase</h4>
+                    <p>After recharge, select products to purchase from the available options.</p>
+                </div>
+                <div class="guideline-item">
+                    <h4>6. How to Earn</h4>
+                    <p>Invest in products and invite friends to maximize your earnings.</p>
+                </div>
+            </div>
+            
+            <div class="contact-us">
+                <h3>Contact Us</h3>
+                <a href="https://wa.me/255xxxxxxxxx?text=Hello%20CLASSIC-MAXIMIZE%20PAY%20support,%20I%20need%20help" class="btn whatsapp-btn">
+                    <i class="fab fa-whatsapp"></i> WhatsApp Support
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/account.js"></script>
+    <script src="js/utils.js"></script>
+</body>
+</html>

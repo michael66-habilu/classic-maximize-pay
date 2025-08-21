@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchased Orders - CLASSIC-MAXIMIZE PAY</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body class="orders-page">
+    <div class="sidebar">
+        <div class="logo">CLASSIC-MAXIMIZE PAY</div>
+        <ul class="menu">
+            <li><a href="home.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="account.html"><i class="fas fa-user"></i> My Account</a></li>
+            <li><a href="affiliate.html"><i class="fas fa-users"></i> Affiliate</a></li>
+            <li><a href="investment.html"><i class="fas fa-chart-line"></i> Investment Grid</a></li>
+            <li><a href="orders.html"><i class="fas fa-shopping-bag"></i> Purchased Orders</a></li>
+            <li><a href="recharge.html"><i class="fas fa-money-bill-wave"></i> Recharge</a></li>
+            <li><a href="withdraw.html"><i class="fas fa-wallet"></i> Withdraw</a></li>
+            <li><a href="transaction.html"><i class="fas fa-history"></i> Transaction History</a></li>
+        </ul>
+    </div>
+    
+    <div class="main-content">
+        <header>
+            <div class="header-left">
+                <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+                <a href="home.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+            </div>
+            <div class="header-right">
+                <button id="logoutBtn" class="btn btn-sm">Logout</button>
+            </div>
+        </header>
+        
+        <div class="orders-container">
+            <h2>Purchased Orders</h2>
+            
+            <div class="task-notification">
+                <p>Complete your daily task to claim your earnings!</p>
+                <button id="viewTaskBtn" class="btn btn-sm">View Today's Task</button>
+            </div>
+            
+            <div class="orders-list">
+                <div class="order-header">
+                    <h3>Your Products</h3>
+                </div>
+                <div class="order-items" id="orderItems">
+                    <!-- Purchased products will be listed here -->
+                </div>
+            </div>
+            
+            <div class="earnings-progress">
+                <h3>Earnings Progress</h3>
+                <div class="progress-bar">
+                    <div class="progress" id="earningsProgress"></div>
+                </div>
+                <p id="earningsText">0 TZS earned today</p>
+            </div>
+        </div>
+    </div>
+    
+    <div id="taskModal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Today's Task</h3>
+            <p id="taskDescription">Share your invitation link with 3 friends today to claim your daily earnings.</p>
+            <div class="share-buttons">
+                <button class="share-btn whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+                <button class="share-btn facebook"><i class="fab fa-facebook"></i> Facebook</button>
+                <button class="share-btn instagram"><i class="fab fa-instagram"></i> Instagram</button>
+            </div>
+            <button id="completeTaskBtn" class="btn">I've Completed the Task</button>
+        </div>
+    </div>
+    
+    <script src="js/orders.js"></script>
+    <script src="js/utils.js"></script>
+</body>
+</html>

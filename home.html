@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - CLASSIC-MAXIMIZE PAY</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body class="home-page">
+    <div class="sidebar">
+        <div class="logo">CLASSIC-MAXIMIZE PAY</div>
+        <ul class="menu">
+            <li><a href="home.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="account.html"><i class="fas fa-user"></i> My Account</a></li>
+            <li><a href="affiliate.html"><i class="fas fa-users"></i> Affiliate</a></li>
+            <li><a href="investment.html"><i class="fas fa-chart-line"></i> Investment Grid</a></li>
+            <li><a href="orders.html"><i class="fas fa-shopping-bag"></i> Purchased Orders</a></li>
+            <li><a href="recharge.html"><i class="fas fa-money-bill-wave"></i> Recharge</a></li>
+            <li><a href="withdraw.html"><i class="fas fa-wallet"></i> Withdraw</a></li>
+            <li><a href="transaction.html"><i class="fas fa-history"></i> Transaction History</a></li>
+        </ul>
+    </div>
+    
+    <div class="main-content">
+        <header>
+            <div class="header-left">
+                <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+            </div>
+            <div class="header-right">
+                <button id="logoutBtn" class="btn btn-sm">Logout</button>
+            </div>
+        </header>
+        
+        <div class="dashboard">
+            <div class="stats">
+                <div class="stat-card total-profit">
+                    <h3>Total Profit</h3>
+                    <p id="totalProfit">0 TZS</p>
+                </div>
+                <div class="stat-card daily-earnings">
+                    <h3>Daily Earnings</h3>
+                    <p id="dailyEarnings">0 TZS</p>
+                </div>
+            </div>
+            
+            <div class="actions">
+                <div class="action-card recharge">
+                    <h3>Recharge</h3>
+                    <a href="recharge.html" class="btn">Recharge Now</a>
+                </div>
+                <div class="action-card withdraw">
+                    <h3>Withdraw</h3>
+                    <a href="withdraw.html" class="btn">Withdraw Now</a>
+                </div>
+                <div class="action-card history">
+                    <h3>Transaction History</h3>
+                    <a href="transaction.html" class="btn">View History</a>
+                </div>
+            </div>
+            
+            <div class="marquee">
+                <p>Invest and invite friends to maximize your daily earnings!</p>
+            </div>
+            
+            <div class="notification">
+                <h3>Today's Notification</h3>
+                <p id="dailyNotification">Welcome back, <span id="usernameDisplay"></span>! Have a great day!</p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/home.js"></script>
+    <script src="js/utils.js"></script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - CLASSIC-MAXIMIZE PAY</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body class="admin-page">
+    <div class="admin-login" id="adminLoginSection">
+        <div class="login-form">
+            <h2>Admin Login</h2>
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <input type="text" id="adminUsername" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="adminPassword" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="admin-dashboard hidden" id="adminDashboard">
+        <div class="admin-sidebar">
+            <div class="admin-logo">CLASSIC-MAXIMIZE PAY</div>
+            <ul class="admin-menu">
+                <li><a href="#" class="admin-menu-item active" data-section="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="#" class="admin-menu-item" data-section="users"><i class="fas fa-users"></i> Users</a></li>
+                <li><a href="#" class="admin-menu-item" data-section="withdraw"><i class="fas fa-money-bill-wave"></i> Withdraw Requests</a></li>
+                <li><a href="#" class="admin-menu-item" data-section="recharge"><i class="fas fa-credit-card"></i> Recharge Requests</a></li>
+                <li><a href="#" class="admin-menu-item" data-section="tasks"><i class="fas fa-tasks"></i> Tasks</a></li>
+                <li><a href="#" class="admin-menu-item" data-section="notifications"><i class="fas fa-bell"></i> Notifications</a></li>
+            </ul>
+            <button id="adminLogoutBtn" class="btn btn-sm"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+        
+        <div class="admin-main">
+            <div class="admin-section active" id="dashboardSection">
+                <h2>Admin Dashboard</h2>
+                <div class="admin-stats">
+                    <div class="admin-stat-card">
+                        <h3>Total Invested Money</h3>
+                        <p id="totalInvested">0 TZS</p>
+                    </div>
+                    <div class="admin-stat-card">
+                        <h3>Total Withdrawn</h3>
+                        <p id="totalWithdrawn">0 TZS</p>
+                    </div>
+                    <div class="admin-stat-card">
+                        <h3>Remaining Balance</h3>
+                        <p id="remainingBalance">0 TZS</p>
+                    </div>
+                </div>
+                
+                <div class="admin-charts">
+                    <div class="chart-container">
+                        <h3>Recent Activity</h3>
+                        <div class="chart-placeholder">
+                            <!-- Chart would be implemented here -->
+                            <p>Activity chart would display here</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="admin-section" id="usersSection">
+                <h2>Users Management</h2>
+                <div class="admin-table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Joined Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersList">
+                            <!-- Users will be listed here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="admin-section" id="withdrawSection">
+                <h2>Withdraw Requests</h2>
+                <div class="admin-table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Amount</th>
+                                <th>Bank</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="withdrawRequestsList">
+                            <!-- Withdraw requests will be listed here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="admin-section" id="rechargeSection">
+                <h2>Recharge Requests</h2>
+                <div class="admin-table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Amount</th>
+                                <th>Method</th>
+                                <th>Transaction ID</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rechargeRequestsList">
+                            <!-- Recharge requests will be listed here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="admin-section" id="tasksSection">
+                <h2>Daily Tasks</h2>
+                <div class="task-editor">
+                    <h3>Edit Daily Task Message</h3>
+                    <textarea id="taskMessage" rows="4">Share your invitation link with 3 friends today to claim your daily earnings.</textarea>
+                    <button id="saveTaskBtn" class="btn">Save Task</button>
+                </div>
+            </div>
+            
+            <div class="admin-section" id="notificationsSection">
+                <h2>Daily Notifications</h2>
+                <div class="notification-editor">
+                    <h3>Edit Daily Notification</h3>
+                    <textarea id="notificationMessage" rows="4">Welcome back! Have a great day investing with us!</textarea>
+                    <button id="saveNotificationBtn" class="btn">Save Notification</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/admin.js"></script>
+    <script src="js/utils.js"></script>
+</body>
+</html>

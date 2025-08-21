@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Grid - CLASSIC-MAXIMIZE PAY</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body class="investment-page">
+    <div class="sidebar">
+        <div class="logo">CLASSIC-MAXIMIZE PAY</div>
+        <ul class="menu">
+            <li><a href="home.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="account.html"><i class="fas fa-user"></i> My Account</a></li>
+            <li><a href="affiliate.html"><i class="fas fa-users"></i> Affiliate</a></li>
+            <li><a href="investment.html"><i class="fas fa-chart-line"></i> Investment Grid</a></li>
+            <li><a href="orders.html"><i class="fas fa-shopping-bag"></i> Purchased Orders</a></li>
+            <li><a href="recharge.html"><i class="fas fa-money-bill-wave"></i> Recharge</a></li>
+            <li><a href="withdraw.html"><i class="fas fa-wallet"></i> Withdraw</a></li>
+            <li><a href="transaction.html"><i class="fas fa-history"></i> Transaction History</a></li>
+        </ul>
+    </div>
+    
+    <div class="main-content">
+        <header>
+            <div class="header-left">
+                <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+                <a href="home.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+            </div>
+            <div class="header-right">
+                <button id="logoutBtn" class="btn btn-sm">Logout</button>
+            </div>
+        </header>
+        
+        <div class="investment-container">
+            <h2>Investment Grid</h2>
+            
+            <div class="investment-grid">
+                <div class="investment-plan">
+                    <h3>2% Profit in 5 Days</h3>
+                    <p>Investment Range: 20,000 - 200,000 TZS</p>
+                    <div class="countdown hidden" id="countdown1">
+                        <p>Time remaining: <span id="time1">5 days</span></p>
+                    </div>
+                    <form class="investment-form" data-id="1">
+                        <div class="form-group">
+                            <input type="number" placeholder="Amount (TZS)" min="20000" max="200000" required>
+                        </div>
+                        <button type="submit" class="btn">Invest</button>
+                    </form>
+                    <button class="btn claim-btn hidden" data-id="1">Claim Profit</button>
+                </div>
+                
+                <div class="investment-plan">
+                    <h3>5% Profit in 10 Days</h3>
+                    <p>Investment Range: 35,000 - 400,000 TZS</p>
+                    <div class="countdown hidden" id="countdown2">
+                        <p>Time remaining: <span id="time2">10 days</span></p>
+                    </div>
+                    <form class="investment-form" data-id="2">
+                        <div class="form-group">
+                            <input type="number" placeholder="Amount (TZS)" min="35000" max="400000" required>
+                        </div>
+                        <button type="submit" class="btn">Invest</button>
+                    </form>
+                    <button class="btn claim-btn hidden" data-id="2">Claim Profit</button>
+                </div>
+                
+                <div class="investment-plan">
+                    <h3>18% Profit in 12 Days</h3>
+                    <p>Investment Range: 150,000 - 650,000 TZS</p>
+                    <div class="countdown hidden" id="countdown3">
+                        <p>Time remaining: <span id="time3">12 days</span></p>
+                    </div>
+                    <form class="investment-form" data-id="3">
+                        <div class="form-group">
+                            <input type="number" placeholder="Amount (TZS)" min="150000" max="650000" required>
+                        </div>
+                        <button type="submit" class="btn">Invest</button>
+                    </form>
+                    <button class="btn claim-btn hidden" data-id="3">Claim Profit</button>
+                </div>
+                
+                <div class="investment-plan">
+                    <h3>24% Profit in 20 Days</h3>
+                    <p>Investment Range: 400,000 - 1,000,000 TZS</p>
+                    <div class="countdown hidden" id="countdown4">
+                        <p>Time remaining: <span id="time4">20 days</span></p>
+                    </div>
+                    <form class="investment-form" data-id="4">
+                        <div class="form-group">
+                            <input type="number" placeholder="Amount (TZS)" min="400000" max="1000000" required>
+                        </div>
+                        <button type="submit" class="btn">Invest</button>
+                    </form>
+                    <button class="btn claim-btn hidden" data-id="4">Claim Profit</button>
+                </div>
+                
+                <div class="investment-plan">
+                    <h3>45% Profit in 30 Days</h3>
+                    <p>Investment Range: 600,000 - 100,000,000 TZS</p>
+                    <div class="countdown hidden" id="countdown5">
+                        <p>Time remaining: <span id="time5">30 days</span></p>
+                    </div>
+                    <form class="investment-form" data-id="5">
+                        <div class="form-group">
+                            <input type="number" placeholder="Amount (TZS)" min="600000" max="100000000" required>
+                        </div>
+                        <button type="submit" class="btn">Invest</button>
+                    </form>
+                    <button class="btn claim-btn hidden" data-id="5">Claim Profit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/investment.js"></script>
+    <script src="js/utils.js"></script>
+</body>
+</html>

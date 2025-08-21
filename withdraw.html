@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Withdraw - CLASSIC-MAXIMIZE PAY</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body class="withdraw-page">
+    <div class="sidebar">
+        <div class="logo">CLASSIC-MAXIMIZE PAY</div>
+        <ul class="menu">
+            <li><a href="home.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="account.html"><i class="fas fa-user"></i> My Account</a></li>
+            <li><a href="affiliate.html"><i class="fas fa-users"></i> Affiliate</a></li>
+            <li><a href="investment.html"><i class="fas fa-chart-line"></i> Investment Grid</a></li>
+            <li><a href="orders.html"><i class="fas fa-shopping-bag"></i> Purchased Orders</a></li>
+            <li><a href="recharge.html"><i class="fas fa-money-bill-wave"></i> Recharge</a></li>
+            <li><a href="withdraw.html"><i class="fas fa-wallet"></i> Withdraw</a></li>
+            <li><a href="transaction.html"><i class="fas fa-history"></i> Transaction History</a></li>
+        </ul>
+    </div>
+    
+    <div class="main-content">
+        <header>
+            <div class="header-left">
+                <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+                <a href="home.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+            </div>
+            <div class="header-right">
+                <button id="logoutBtn" class="btn btn-sm">Logout</button>
+            </div>
+        </header>
+        
+        <div class="withdraw-container">
+            <h2>Withdraw Funds</h2>
+            
+            <div id="bankInfoSection">
+                <div class="alert">
+                    <p>You need to connect your bank account first.</p>
+                    <button id="connectBankBtn" class="btn">Connect Bank Account</button>
+                </div>
+            </div>
+            
+            <div id="withdrawFormSection" class="hidden">
+                <div id="bankInfoDisplay">
+                    <h3>Your Bank Information</h3>
+                    <p>Name: <span id="displayName"></span></p>
+                    <p>Phone: <span id="displayPhone"></span></p>
+                    <p>Bank: <span id="displayBank"></span></p>
+                    <button id="editBankBtn" class="btn btn-sm">Edit</button>
+                </div>
+                
+                <form id="withdrawForm">
+                    <div class="form-group">
+                        <input type="number" id="withdrawAmount" placeholder="Amount (TZS)" required>
+                    </div>
+                    <button type="submit" class="btn">Withdraw</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div id="bankModal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Connect Bank Account</h3>
+            <form id="bankForm">
+                <div class="form-group">
+                    <input type="text" id="bankName" placeholder="Full Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" id="bankPhone" placeholder="Phone Number" required>
+                </div>
+                <div class="form-group">
+                    <select id="bankSelect" required>
+                        <option value="">Select Bank</option>
+                        <option value="mpesa">M-PESA</option>
+                        <option value="mixx">MIXX BY YAS</option>
+                        <option value="airtel">AIRTEL MONEY</option>
+                        <option value="halopesa">HALOPESA</option>
+                        <option value="crdb">CRDB</option>
+                        <option value="nmb">NMB</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Save</button>
+            </form>
+        </div>
+    </div>
+    
+    <script src="js/withdraw.js"></script>
+    <script src="js/utils.js"></script>
+</body>
+</html>

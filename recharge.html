@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recharge - CLASSIC-MAXIMIZE PAY</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body class="recharge-page">
+    <div class="sidebar">
+        <div class="logo">CLASSIC-MAXIMIZE PAY</div>
+        <ul class="menu">
+            <li><a href="home.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="account.html"><i class="fas fa-user"></i> My Account</a></li>
+            <li><a href="affiliate.html"><i class="fas fa-users"></i> Affiliate</a></li>
+            <li><a href="investment.html"><i class="fas fa-chart-line"></i> Investment Grid</a></li>
+            <li><a href="orders.html"><i class="fas fa-shopping-bag"></i> Purchased Orders</a></li>
+            <li><a href="recharge.html"><i class="fas fa-money-bill-wave"></i> Recharge</a></li>
+            <li><a href="withdraw.html"><i class="fas fa-wallet"></i> Withdraw</a></li>
+            <li><a href="transaction.html"><i class="fas fa-history"></i> Transaction History</a></li>
+        </ul>
+    </div>
+    
+    <div class="main-content">
+        <header>
+            <div class="header-left">
+                <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+                <a href="home.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+            </div>
+            <div class="header-right">
+                <button id="logoutBtn" class="btn btn-sm">Logout</button>
+            </div>
+        </header>
+        
+        <div class="recharge-container">
+            <h2>Recharge Your Account</h2>
+            
+            <div class="payment-methods">
+                <h3>Choose Payment Method</h3>
+                <div class="method-grid">
+                    <div class="method" data-method="mpesa">
+                        <i class="fas fa-mobile-alt"></i>
+                        <p>M-PESA</p>
+                    </div>
+                    <div class="method" data-method="mixx">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <p>MIXX BY YAS</p>
+                    </div>
+                    <div class="method" data-method="airtel">
+                        <i class="fas fa-mobile-alt"></i>
+                        <p>AIRTEL MONEY</p>
+                    </div>
+                    <div class="method" data-method="halopesa">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <p>HALOPESA</p>
+                    </div>
+                    <div class="method" data-method="crdb">
+                        <i class="fas fa-university"></i>
+                        <p>CRDB</p>
+                    </div>
+                    <div class="method" data-method="nmb">
+                        <i class="fas fa-university"></i>
+                        <p>NMB</p>
+                    </div>
+                    <div class="method" data-method="selcom">
+                        <i class="fas fa-credit-card"></i>
+                        <p>SELCOM PAY</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="paymentDetails" class="hidden">
+                <div class="payment-info">
+                    <h3 id="selectedMethod"></h3>
+                    <p>Payment Number: <span id="paymentNumber">1234567890</span> <button id="copyBtn" class="btn btn-sm">Copy</button></p>
+                </div>
+                
+                <form id="rechargeForm">
+                    <div class="form-group">
+                        <input type="tel" id="senderPhone" placeholder="Your Phone Number" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="amount" placeholder="Amount (TZS)" required>
+                    </div>
+                    <button type="submit" class="btn">PAY</button>
+                </form>
+            </div>
+            
+            <div id="productsSection" class="hidden">
+                <h3>Select Product to Purchase</h3>
+                <div class="product-grid">
+                    <div class="product">
+                        <img src="https://via.placeholder.com/150" alt="Product 1">
+                        <h4>Product 1</h4>
+                        <p>Price: 20,000 TZS</p>
+                        <p>Daily Earning: 2.432%</p>
+                        <button class="btn purchase-btn" data-id="1">Purchase</button>
+                    </div>
+                    <!-- More products would be added here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="transactionModal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Enter Transaction Details</h3>
+            <form id="transactionForm">
+                <div class="form-group">
+                    <input type="text" id="transactionId" placeholder="Transaction ID/Receipt Number" required>
+                </div>
+                <button type="submit" class="btn">Confirm</button>
+            </form>
+        </div>
+    </div>
+    <script src="js/recharge.js"></script>
+    <script src="js/utils.js"></script> 
+</body>
+</html>

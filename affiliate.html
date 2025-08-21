@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affiliate - CLASSIC-MAXIMIZE PAY</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body class="affiliate-page">
+    <div class="sidebar">
+        <div class="logo">CLASSIC-MAXIMIZE PAY</div>
+        <ul class="menu">
+            <li><a href="home.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="account.html"><i class="fas fa-user"></i> My Account</a></li>
+            <li><a href="affiliate.html"><i class="fas fa-users"></i> Affiliate</a></li>
+            <li><a href="investment.html"><i class="fas fa-chart-line"></i> Investment Grid</a></li>
+            <li><a href="orders.html"><i class="fas fa-shopping-bag"></i> Purchased Orders</a></li>
+            <li><a href="recharge.html"><i class="fas fa-money-bill-wave"></i> Recharge</a></li>
+            <li><a href="withdraw.html"><i class="fas fa-wallet"></i> Withdraw</a></li>
+            <li><a href="transaction.html"><i class="fas fa-history"></i> Transaction History</a></li>
+        </ul>
+    </div>
+    
+    <div class="main-content">
+        <header>
+            <div class="header-left">
+                <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+                <a href="home.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+            </div>
+            <div class="header-right">
+                <button id="logoutBtn" class="btn btn-sm">Logout</button>
+            </div>
+        </header>
+        
+        <div class="affiliate-container">
+            <h2>Affiliate Program</h2>
+            
+            <div class="invitation-section">
+                <h3>Your Invitation Link</h3>
+                <div class="invitation-link">
+                    <input type="text" id="inviteLink" value="https://classic-maximize-pay.com/register?ref=USER123" readonly>
+                    <button id="copyInviteBtn" class="btn btn-sm">Copy</button>
+                </div>
+                
+                <div class="share-buttons">
+                    <button class="share-btn whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+                    <button class="share-btn facebook"><i class="fab fa-facebook"></i> Facebook</button>
+                    <button class="share-btn instagram"><i class="fab fa-instagram"></i> Instagram</button>
+                    <button class="share-btn tiktok"><i class="fab fa-tiktok"></i> TikTok</button>
+                    <button class="share-btn telegram"><i class="fab fa-telegram"></i> Telegram</button>
+                </div>
+            </div>
+            
+            <div class="team-management">
+                <h3>Team Management</h3>
+                
+                <div class="team-section">
+                    <h4>Team One (Level 1 - 15%)</h4>
+                    <p>Active Users: <span id="teamOneCount">0</span></p>
+                    <p>Earnings: <span id="teamOneEarnings">0 TZS</span></p>
+                    <button class="btn view-team-btn" data-level="1">View Team</button>
+                </div>
+                
+                <div class="team-section">
+                    <h4>Team Two (Level 2 - 3%)</h4>
+                    <p>Active Users: <span id="teamTwoCount">0</span></p>
+                    <p>Earnings: <span id="teamTwoEarnings">0 TZS</span></p>
+                    <button class="btn view-team-btn" data-level="2">View Team</button>
+                </div>
+                
+                <div class="team-section">
+                    <h4>Team Three (Level 3 - 1%)</h4>
+                    <p>Active Users: <span id="teamThreeCount">0</span></p>
+                    <p>Earnings: <span id="teamThreeEarnings">0 TZS</span></p>
+                    <button class="btn view-team-btn" data-level="3">View Team</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="teamModal" class="modal hidden">
+        <div class="modal-content">
+            <h3 id="teamModalTitle">Team Members</h3>
+            <div class="team-members" id="teamMembersList">
+                <!-- Team members will be listed here -->
+            </div>
+            <button class="btn close-team-modal">Close</button>
+        </div>
+    </div>
+    
+    <script src="js/affiliate.js"></script>
+    <script src="js/utils.js"></script>
+</body>
+</html>

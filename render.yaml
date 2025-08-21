@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: classic-maximize-pay
+    env: node
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    envVars:
+      - key: MONGO_URI
+        fromSecret: MONGO_URI
+      - key: JWT_SECRET
+        fromSecret: JWT_SECRET
+      - key: EMAIL_USER
+        fromSecret: EMAIL_USER
+      - key: EMAIL_PASSWORD
+        fromSecret: EMAIL_PASSWORD
