@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLASSIC-MAXIMIZE PAY - Jisajili</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(rgba(255, 204, 0, 0.7), rgba(255, 204, 0, 0.7)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="rgba(255, 230, 0, 0.2)"/><path d="M0 0L100 100" stroke="rgba(255, 200, 0, 0.2)" stroke-width="2"/><path d="M100 0L0 100" stroke="rgba(255, 200, 0, 0.2)" stroke-width="2"/></svg>');
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #ffcc00;
+            padding: 25px 30px;
+            text-align: center;
+            color: #333;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .form-container {
+            padding: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+            font-size: 15px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: #ffcc00;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.3);
+        }
+
+        .input-group i {
+            position: absolute;
+            right: 15px;
+            top: 42px;
+            color: #777;
+        }
+
+        .error {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: #ffcc00;
+            border: none;
+            border-radius: 8px;
+            color: #333;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background: #e6b800;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 25px;
+            color: #555;
+            font-size: 16px;
+        }
+
+        .login-link a {
+            color: #ff9900;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .success-message {
+            display: none;
+            background: #2ecc71;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .password-rules {
+            font-size: 13px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 500px) {
+            .container {
+                border-radius: 10px;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CLASSIC-MAXIMIZE PAY</h1>
+            <p>Jisajili kwa huduma bora za malipo</p>
+        </div>
+
+        <div class="form-container">
+            <div class="success-message" id="successMessage">
+                <i class="fas fa-check-circle"></i> Umefanikiwa kujisajili! Tafadhali ingia kwenye akaunti yako.
+            </div>
+
+            <form id="registerForm">
+                <div class="input-group">
+                    <label for="fullname">Jina Kamili</label>
+                    <input type="text" id="fullname" name="fullname" placeholder="Weka jina kamili (majina mawili au zaidi)" required>
+                    <i class="fas fa-user"></i>
+                    <div class="error" id="fullnameError">Lazima uweke majina mawili au zaidi</div>
+                </div>
+
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Weka username (herufi na namba pekee)" required>
+                    <i class="fas fa-at"></i>
+                    <div class="error" id="usernameError">Username inapaswa kuwa na herufi na namba pekee</div>
+                </div>
+
+                <div class="input-group">
+                    <label for="email">Barua Pepe</label>
+                    <input type="email" id="email" name="email" placeholder="Weka barua pepe yako" required>
+                    <i class="fas fa-envelope"></i>
+                    <div class="error" id="emailError">Barua pepe si sahihi au tayari imetumika</div>
+                </div>
+
+                <div class="input-group">
+                    <label for="phone">Namba ya Simu</label>
+                    <input type="tel" id="phone" name="phone" placeholder="Weka namba yako ya simu" required>
+                    <i class="fas fa-phone"></i>
+                    <div class="error" id="phoneError">Namba ya simu si sahihi</div>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Weka password yako" required>
+                    <i class="fas fa-lock"></i>
+                    <div class="error" id="passwordError">Password haifai (lazima iwe na herufi kubwa, namba na isiwe chini ya herufi 8)</div>
+                    <div class="password-rules">Password lazima iwe na herufi kubwa, namba na isiwe chini ya herufi 8</div>
+                </div>
+
+                <div class="input-group">
+                    <label for="confirmPassword">Rudia Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Rudia password yako" required>
+                    <i class="fas fa-lock"></i>
+                    <div class="error" id="confirmPasswordError">Password hazifanani</div>
+                </div>
+
+                <button type="submit" class="btn">Sajili</button>
+            </form>
+
+            <div class="login-link">
+                <p>Una akaunti tayari? <a href="login.html">Ingia hapa</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('registerForm');
+            const successMessage = document.getElementById('successMessage');
+            
+            // Existing emails for validation simulation
+            const existingEmails = ['test@example.com', 'user@gmail.com', 'johndoe@yahoo.com'];
+            
+            // Validate full name (at least two names)
+            function validateFullName(fullname) {
+                const names = fullname.trim().split(/\s+/);
+                return names.length >= 2;
+            }
+            
+            // Validate username (only letters and numbers)
+            function validateUsername(username) {
+                return /^[a-zA-Z0-9]+$/.test(username);
+            }
+            
+            // Validate email format and check if it's not already used
+            function validateEmail(email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email) && !existingEmails.includes(email);
+            }
+            
+            // Validate phone number (Tanzanian format)
+            function validatePhone(phone) {
+                return /^(\+255|0)[0-9]{9}$/.test(phone.replace(/\s/g, ''));
+            }
+            
+            // Validate password (at least 8 chars, one uppercase, one number)
+            function validatePassword(password) {
+                return /^(?=.*[A-Z])(?=.*\d).{8,}$/.test(password);
+            }
+            
+            // Show error function
+            function showError(inputId, errorId) {
+                document.getElementById(errorId).style.display = 'block';
+                document.getElementById(inputId).style.borderColor = '#e74c3c';
+            }
+            
+            // Hide error function
+            function hideError(inputId, errorId) {
+                document.getElementById(errorId).style.display = 'none';
+                document.getElementById(inputId).style.borderColor = '#ddd';
+            }
+            
+            // Form submission
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                let isValid = true;
+                
+                // Get form values
+                const fullname = document.getElementById('fullname').value;
+                const username = document.getElementById('username').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                
+                // Validate full name
+                if (!validateFullName(fullname)) {
+                    showError('fullname', 'fullnameError');
+                    isValid = false;
+                } else {
+                    hideError('fullname', 'fullnameError');
+                }
+                
+                // Validate username
+                if (!validateUsername(username)) {
+                    showError('username', 'usernameError');
+                    isValid = false;
+                } else {
+                    hideError('username', 'usernameError');
+                }
+                
+                // Validate email
+                if (!validateEmail(email)) {
+                    showError('email', 'emailError');
+                    isValid = false;
+                } else {
+                    hideError('email', 'emailError');
+                }
+                
+                // Validate phone
+                if (!validatePhone(phone)) {
+                    showError('phone', 'phoneError');
+                    isValid = false;
+                } else {
+                    hideError('phone', 'phoneError');
+                }
+                
+                // Validate password
+                if (!validatePassword(password)) {
+                    showError('password', 'passwordError');
+                    isValid = false;
+                } else {
+                    hideError('password', 'passwordError');
+                }
+                
+                // Validate confirm password
+                if (password !== confirmPassword) {
+                    showError('confirmPassword', 'confirmPasswordError');
+                    isValid = false;
+                } else {
+                    hideError('confirmPassword', 'confirmPasswordError');
+                }
+                
+                // If form is valid, simulate registration
+                if (isValid) {
+                    // Simulate API call to backend
+                    setTimeout(() => {
+                        successMessage.style.display = 'block';
+                        form.reset();
+                        
+                        // Hide success message after 5 seconds
+                        setTimeout(() => {
+                            successMessage.style.display = 'none';
+                        }, 5000);
+                    }, 1000);
+                }
+            });
+            
+            // Real-time validation for each field
+            document.getElementById('fullname').addEventListener('blur', function() {
+                if (!validateFullName(this.value)) {
+                    showError('fullname', 'fullnameError');
+                } else {
+                    hideError('fullname', 'fullnameError');
+                }
+            });
+            
+            document.getElementById('username').addEventListener('blur', function() {
+                if (!validateUsername(this.value)) {
+                    showError('username', 'usernameError');
+                } else {
+                    hideError('username', 'usernameError');
+                }
+            });
+            
+            document.getElementById('email').addEventListener('blur', function() {
+                if (!validateEmail(this.value)) {
+                    showError('email', 'emailError');
+                } else {
+                    hideError('email', 'emailError');
+                }
+            });
+            
+            document.getElementById('phone').addEventListener('blur', function() {
+                if (!validatePhone(this.value)) {
+                    showError('phone', 'phoneError');
+                } else {
+                    hideError('phone', 'phoneError');
+                }
+            });
+            
+            document.getElementById('password').addEventListener('blur', function() {
+                if (!validatePassword(this.value)) {
+                    showError('password', 'passwordError');
+                } else {
+                    hideError('password', 'passwordError');
+                }
+            });
+            
+            document.getElementById('confirmPassword').addEventListener('blur', function() {
+                const password = document.getElementById('password').value;
+                if (this.value !== password) {
+                    showError('confirmPassword', 'confirmPasswordError');
+                } else {
+                    hideError('confirmPassword', 'confirmPasswordError');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
