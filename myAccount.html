@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>My Account | CLASSIC-MAXIMIZE PAY</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --milk:#f6f4ee;
+  --glass:rgba(0,0,0,0.45);
+  --accent:#ffbf00;
+  --text:#fff;
+}
+body{
+  margin:0;
+  font-family:'Roboto',sans-serif;
+  background:var(--milk);
+  color:#111;
+  padding:16px;
+}
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 16px;
+  background:var(--glass);
+  backdrop-filter:blur(6px);
+  border-radius:12px;
+  margin-bottom:16px;
+}
+header h2{margin:0; font-size:18px;}
+.back-btn{
+  background:var(--accent);
+  border:none;
+  padding:8px 14px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:700;
+}
+.card{
+  background:var(--glass);
+  color:var(--text);
+  padding:16px;
+  border-radius:12px;
+  margin-bottom:16px;
+  backdrop-filter:blur(6px);
+}
+.card h3{
+  margin-top:0;
+}
+button{
+  background:var(--accent);
+  border:none;
+  padding:10px 14px;
+  border-radius:8px;
+  font-weight:700;
+  cursor:pointer;
+  margin-top:8px;
+  width:100%;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <button class="back-btn" onclick="goBack()">← Back</button>
+  <h2>My Account</h2>
+</header>
+
+<div class="card">
+  <h3>Account Info</h3>
+  <p>Username: <span id="username">---</span></p>
+  <p>Email: <span id="email">---</span></p>
+  <p>Phone: <span id="phone">---</span></p>
+</div>
+
+<div class="card">
+  <h3>Financial Info</h3>
+  <p>Balance: <span id="balance">TZS 0</span></p>
+  <p>Total Profit: <span id="totalProfit">TZS 0</span></p>
+  <p>Daily Earnings: <span id="dailyEarnings">TZS 0</span></p>
+  <button onclick="claimDailyEarnings()">Claim Daily Earnings</button>
+</div>
+
+<div class="card">
+  <h3>Customer Support</h3>
+  <button onclick="contactSupport()">Contact Support via WhatsApp</button>
+</div>
+
+<script>
+const accUserId = localStorage.getItem("userId"); // Assume stored after login
+
+function goBack(){ window.history.back(); }
+
+// Fetch user info
+async function loadAccount(){
+  try {
+    const res = await fetch(`https://classic-maximize-pay.onrender.com/api/user/${accUserId}`);
+    const user = await res.json();
+
+    document.getElementById("username").textContent = user.username;
+    document.getElementById("email").textContent = user.email;
+    document.getElementById("phone").textContent = user.phone;
+    document.getElementById("balance").textContent = `TZS ${user.balance.toLocaleString()}`;
+    document.getElementById("dailyEarnings").textContent = `TZS ${user.dailyEarnings.toLocaleString()}`;
+    document.getElementById("totalProfit").textContent = `TZS ${user.totalProfit.toLocaleString()}`;
+  } catch(e){ console.error("Error loading account info:",e); }
+}
+
+// Claim daily earnings API call
+async function claimDailyEarnings(){
+  try {
+    const res = await fetch(`https://classic-maximize-pay.onrender.com/api/claim-daily`,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({userId: accUserId})
+    });
+    const data = await res.json();
+    alert(data.msg || "Daily earnings claimed!");
+    loadAccount(); // Refresh balances
+  } catch(e){ console.error(e); alert("Failed to claim daily earnings."); }
+}
+
+// Contact support via WhatsApp
+function contactSupport(){
+  const supportNumber = "0658042987"; // <-- Replace with your WhatsApp number
+  const message = encodeURIComponent("Hello, I need help with my account.");
+  window.open(`https://wa.me/${supportNumber}?text=${message}`,"_blank");
+}
+
+// Initial load
+loadAccount();
+</script>
+
+</body>
+</html>

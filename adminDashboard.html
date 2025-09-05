@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Admin Dashboard | CLASSIC-MAXIMIZE PAY</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --bg: rgba(0,0,0,0.85);
+    --card: rgba(0,0,0,0.6);
+    --accent:#ffbf00;
+    --white:#fff;
+  }
+  body{margin:0;font-family:Roboto,Arial; background:var(--bg); color:var(--white);}
+  header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:rgba(0,0,0,0.7);}
+  header h1{font-size:18px;margin:0;}
+  .main{display:flex;height:calc(100vh - 60px);}
+  .side{
+    width:300px;
+    background:var(--card);
+    padding:12px;
+    box-sizing:border-box;
+    overflow:auto;
+  }
+  .side h3{margin:8px 0;}
+  .side button{display:block;width:100%;margin:8px 0;padding:10px;border:none;border-radius:8px;background:var(--accent);color:#000;font-weight:700;cursor:pointer;}
+  .content{flex:1;padding:18px;overflow:auto;}
+  .cards{display:flex;gap:12px;margin-bottom:14px;}
+  .card{background:var(--card);padding:14px;border-radius:10px;flex:1;}
+  .list{background:var(--card);padding:12px;border-radius:10px;margin-bottom:12px;}
+  .request{padding:10px;border-bottom:1px dashed rgba(255,255,255,0.06);}
+  .btn-small{padding:6px 8px;margin-right:6px;border:none;border-radius:6px;cursor:pointer;font-weight:700;}
+  .btn-approve{background:limegreen;color:#000;}
+  .btn-reject{background:#ff6b6b;color:#000;}
+  .btn-delete{background:#444;color:#fff;}
+  table{width:100%;border-collapse:collapse;color:var(--white);}
+  th,td{padding:8px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:left;}
+  .muted{color:rgba(255,255,255,0.7);font-size:13px;}
+  .small{font-size:13px}
+</style>
+</head>
+<body>
+  <header>
+    <h1>Admin • CLASSIC-MAXIMIZE PAY</h1>
+    <div>
+      <button id="logoutAdminBtn" style="background:var(--accent);border:none;padding:8px 12px;border-radius:8px;font-weight:700;cursor:pointer;">Logout</button>
+    </div>
+  </header>
+
+  <div class="main">
+    <aside class="side">
+      <h3>Menu</h3>
+      <button id="btnUsers">Users</button>
+      <button id="btnWithdraws">Withdraw Requests</button>
+      <button id="btnRecharges">Recharge Requests</button>
+      <button id="btnTasks">Tasks Entry</button>
+      <button id="btnNotifications">Daily Notifications</button>
+      <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:12px 0;">
+      <div class="muted small">Quick stats</div>
+      <div id="quickStats" style="margin-top:8px;"></div>
+    </aside>
+
+    <section class="content">
+      <div class="cards">
+        <div class="card">
+          <div class="muted small">Invested Money</div>
+          <div id="investedMoney" style="font-size:20px;font-weight:700">TZS 0</div>
+        </div>
+        <div class="card">
+          <div class="muted small">Withdrawn</div>
+          <div id="withdrawnMoney" style="font-size:20px;font-weight:700">TZS 0</div>
+        </div>
+        <div class="card">
+          <div class="muted small">Remaining Balance</div>
+          <div id="remainingMoney" style="font-size:20px;font-weight:700">TZS 0</div>
+        </div>
+      </div>
+
+      <!-- Dynamic area -->
+      <div id="panelArea">
+        <!-- Default: Pending Requests -->
+        <div class="list" id="pendingRequestsPanel">
+          <h3>Pending Requests</h3>
+          <div id="pendingRequests"></div>
+        </div>
+
+        <div class="list" id="usersPanel" style="display:none">
+          <h3>Users</h3>
+          <table id="usersTable">
+            <thead><tr><th>Username</th><th>Phone</th><th>Balance</th><th>Actions</th></tr></thead>
+            <tbody id="usersTableBody"></tbody>
+          </table>
+        </div>
+
+        <div class="list" id="rechargePanel" style="display:none">
+          <h3>Recharge Requests</h3>
+          <div id="rechargeRequests"></div>
+        </div>
+
+        <div class="list" id="withdrawPanel" style="display:none">
+          <h3>Withdraw Requests</h3>
+          <div id="withdrawRequests"></div>
+        </div>
+
+        <div class="list" id="tasksPanel" style="display:none">
+          <h3>Tasks Entry</h3>
+          <textarea id="taskText" rows="4" style="width:100%;padding:8px;border-radius:8px;"></textarea>
+          <button id="saveTaskBtn" style="margin-top:8px;background:var(--accent);border:none;padding:8px 12px;border-radius:8px;font-weight:700;cursor:pointer;">Save Task</button>
+          <div id="tasksList" style="margin-top:10px;"></div>
+        </div>
+
+        <div class="list" id="notifyPanel" style="display:none">
+          <h3>Daily Notifications</h3>
+          <input id="notifyDate" type="date" style="padding:8px;border-radius:8px;width:200px"/>
+          <textarea id="notifyText" rows="3" style="width:100%;padding:8px;border-radius:8px;margin-top:8px;"></textarea>
+          <button id="saveNotifyBtn" style="margin-top:8px;background:var(--accent);border:none;padding:8px 12px;border-radius:8px;font-weight:700;cursor:pointer;">Save Notification</button>
+          <div id="notificationsList" style="margin-top:12px;"></div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+<script src="./js/admin.js"></script>
+</body>
+</html>

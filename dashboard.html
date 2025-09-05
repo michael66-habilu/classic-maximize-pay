@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dashboard | CLASSIC-MAXIMIZE PAY</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --milk:#f6f4ee;
+  --glass:rgba(0,0,0,0.45);
+  --accent:#ffbf00;
+  --text:#fff;
+}
+body{
+  margin:0;
+  font-family:'Roboto',sans-serif;
+  background:var(--milk);
+  color:#111;
+}
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px;
+  background:var(--glass);
+  backdrop-filter:blur(6px);
+}
+header h2{
+  margin:0;
+  font-size:18px;
+  font-weight:700;
+}
+.logout-btn{
+  background:var(--accent);
+  border:none;
+  padding:8px 14px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:700;
+}
+
+/* Sidebar */
+.sidebar{
+  position:fixed;
+  top:0;
+  left:-260px;
+  width:250px;
+  height:100%;
+  background:rgba(0,0,0,0.7);
+  color:#fff;
+  padding-top:60px;
+  transition:0.3s;
+  z-index:100;
+}
+.sidebar a{
+  display:block;
+  padding:14px 20px;
+  color:#fff;
+  text-decoration:none;
+  margin-bottom:5px;
+  border-bottom:1px solid rgba(255,255,255,0.2);
+}
+.sidebar a:hover{
+  background:rgba(255,191,0,0.3);
+}
+
+/* Open sidebar button */
+.menu-btn{
+  cursor:pointer;
+  font-weight:700;
+  background:var(--accent);
+  border:none;
+  padding:8px 12px;
+  border-radius:8px;
+}
+
+/* Dashboard Boxes */
+.dashboard-boxes{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-around;
+  padding:16px;
+}
+.box{
+  background:var(--glass);
+  color:var(--text);
+  flex:0 0 45%;
+  margin:10px;
+  padding:20px;
+  border-radius:12px;
+  text-align:center;
+  backdrop-filter:blur(6px);
+  box-shadow:0 6px 18px rgba(0,0,0,0.25);
+}
+.box h3{margin:0 0 10px;}
+.box p{font-size:18px; font-weight:700; margin:0;}
+
+/* Buttons section */
+.action-buttons{
+  display:flex;
+  justify-content:space-around;
+  margin:20px 10px;
+}
+.action-buttons button{
+  padding:12px 18px;
+  border:none;
+  border-radius:10px;
+  background:var(--accent);
+  color:#000;
+  font-weight:700;
+  cursor:pointer;
+  flex:1;
+  margin:0 5px;
+}
+
+/* Notification section */
+.notification{
+  background:var(--glass);
+  color:var(--text);
+  margin:10px 16px;
+  padding:14px;
+  border-radius:10px;
+  backdrop-filter:blur(6px);
+  font-weight:700;
+  text-align:center;
+}
+
+/* Scrolling text animation */
+.marquee{
+  width:100%;
+  overflow:hidden;
+  background:var(--accent);
+  color:#000;
+  padding:10px 0;
+  margin:10px 0;
+  font-weight:700;
+}
+.marquee p{
+  display:inline-block;
+  white-space:nowrap;
+  animation: scroll-left 10s linear infinite;
+}
+@keyframes scroll-left{
+  0%{transform:translateX(100%);}
+  100%{transform:translateX(-100%);}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <button class="menu-btn" onclick="toggleSidebar()">☰ Menu</button><img src="assets/logo.png" alt="Logo">
+  <h2>CLASSIC-MAXIMIZE PAY</h2>
+  <button class="logout-btn" onclick="logout()">Logout</button>
+</header>
+
+<div class="sidebar" id="sidebar">
+  <a href="myAccount.html">My Account</a>
+  <a href="investmentGrid.html">Investment Grid</a>
+  <a href="affiliate.html">Affiliate</a>
+  <a href="purchasedOrders.html">Purchased Orders</a>
+</div>
+
+<div class="marquee">
+  <p>Invest now & invite friends to increase your earnings daily!</p>
+</div>
+
+<div class="dashboard-boxes">
+  <div class="box">
+    <h3>Total Profit</h3>
+    <p id="totalProfit">TZS 0</p>
+  </div>
+  <div class="box">
+    <h3>Balance</h3>
+    <p id="balance">TZS 0</p>
+  </div>
+  <div class="box">
+    <h3>Daily Earnings</h3>
+    <p id="dailyEarnings">TZS 0</p>
+  </div>
+</div>
+
+<div class="action-buttons">
+  <button onclick="goToRecharge()">Recharge</button>
+  <button onclick="goToWithdraw()">Withdraw</button>
+  <button onclick="goToTransactions()">Transactions</button>
+</div>
+
+<div class="notification" id="greetingNotification">
+  <!-- Greeting based on time of day -->
+</div>
+
+<script src="./js/dashboard.js"></script>
+</body>
+</html>

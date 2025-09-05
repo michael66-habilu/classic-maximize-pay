@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Recharge | CLASSIC-MAXIMIZE PAY</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --milk:#f6f4ee;
+      --glass:rgba(0,0,0,0.45);
+      --accent:#ffbf00;
+      --text:#ffffff;
+    }
+    * { box-sizing:border-box; }
+    body {
+      margin:0;
+      font-family:'Roboto',sans-serif;
+      background:var(--milk);
+      color:#111;
+      padding:16px;
+    }
+    h2 { text-align:center; margin-bottom:20px; font-weight:700; }
+
+    .card { background:var(--glass); color:var(--text); padding:16px; border-radius:14px; margin-bottom:16px; backdrop-filter:blur(6px); box-shadow:0 8px 22px rgba(0,0,0,0.25); }
+
+    label { display:block; margin:10px 0 4px; font-weight:600; }
+    select, input { width:100%; padding:10px; border:1px solid #ccc; border-radius:10px; font-size:15px; }
+    button { background:var(--accent); border:none; border-radius:10px; padding:12px 16px; font-weight:700; cursor:pointer; margin-top:12px; width:100%; }
+
+    .pay-info { margin-top:12px; padding:10px; background:#fff; border-radius:10px; color:#000; font-size:14px; display:none; white-space:pre-line; }
+    .copy-btn { background:#111; color:#fff; border:none; padding:6px 10px; border-radius:8px; margin-left:8px; cursor:pointer; }
+
+    .products { margin-top:20px; display:grid; grid-template-columns:1fr; gap:14px; }
+    .product { background:#fff; border-radius:12px; box-shadow:0 8px 20px rgba(0,0,0,0.12); overflow:hidden; }
+    .product img { width:100%; display:block; }
+    .product-body { padding:12px; }
+    .product-body h4 { margin:0 0 6px; }
+    .purchase-btn { background:var(--accent); border:none; padding:10px 14px; border-radius:10px; font-weight:700; cursor:pointer; margin-top:8px; width:100%; }
+
+    .popup { position:fixed; top:0;left:0;right:0;bottom:0; background:rgba(0,0,0,0.6); display:none; justify-content:center; align-items:center; z-index:100; }
+    .popup-content { background:#fff; padding:20px; border-radius:14px; width:90%; max-width:400px; }
+    .popup-content h3 { margin-top:0; }
+    .close-popup { float:right; cursor:pointer; font-weight:bold; color:red; }
+
+    @media(min-width:600px) { .products { grid-template-columns:repeat(2,1fr); } }
+  </style>
+</head>
+<body>
+
+<h2>Recharge</h2>
+
+<div class="card">
+  <label for="paymentMethod">Choose Payment Method</label>
+  <select id="paymentMethod">
+    <option value="">Select Payment Method</option>
+    <option value="M-PESA">M-PESA</option>
+    <option value="MIXX BY YAS">MIXX BY YAS</option>
+    <option value="AIRTEL MONEY">AIRTEL MONEY</option>
+    <option value="HALOPESA">HALOPESA</option>
+    <option value="CRDB">CRDB</option>
+    <option value="NMB">NMB</option>
+    <option value="SELCOM PAY">SELCOM PAY</option>
+  </select>
+
+  <div id="payInfo" class="pay-info">
+    <span id="paySummary"></span>
+    <br>Payment Number: <span id="payNumber"></span>
+    <button class="copy-btn" onclick="copyPayNumber()">Copy Number</button>
+  </div>
+
+  <label for="fullName">Full Name (as registered)</label>
+  <input type="text" id="fullName" placeholder="Enter your full name"/>
+
+  <label for="phone">Phone Number used for payment</label>
+  <input type="text" id="phone" placeholder="07XXXXXXXX"/>
+
+  <button id="payBtn">Pay</button>
+</div>
+
+<div class="products" id="productsSection" style="display:none;">
+  <div class="product">
+    <img src="images/product1.jpg" alt="Product 1"/>
+    <div class="product-body">
+      <h4>Product 1</h4>
+      <p>Price: <span class="price">TZS 50,000</span></p>
+      <button class="purchase-btn" onclick="openPurchasePopup('Product 1')">Purchase</button>
+    </div>
+  </div>
+  <div class="product">
+    <img src="images/product2.jpg" alt="Product 2"/>
+    <div class="product-body">
+      <h4>Product 2</h4>
+      <p>Price: <span class="price">TZS 100,000</span></p>
+      <button class="purchase-btn" onclick="openPurchasePopup('Product 2')">Purchase</button>
+    </div>
+  </div>
+  <!-- Add more products as needed -->
+</div>
+
+<div class="popup" id="purchasePopup">
+  <div class="popup-content">
+    <span class="close-popup" onclick="closePurchasePopup()">&times;</span>
+    <h3>Enter Transaction ID / Receipt Number</h3>
+    <input type="text" id="amount" placeholder="Enter amount"/>
+    <input type="text" id="transactionId" placeholder="Transaction ID"/>
+    <button onclick="submitRecharge()">Confirm</button>
+  </div>
+</div>
+
+<script src="./js/recharge.js"></script>
+</body>
+</html>

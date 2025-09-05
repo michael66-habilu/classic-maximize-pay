@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Affiliate | CLASSIC-MAXIMIZE PAY</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --milk:#f6f4ee;
+  --glass:rgba(0,0,0,0.45);
+  --accent:#ffbf00;
+  --text:#fff;
+}
+body{
+  margin:0;
+  font-family:'Roboto',sans-serif;
+  background:var(--milk);
+  color:#111;
+}
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px;
+  background:var(--glass);
+  backdrop-filter:blur(6px);
+}
+header h2{margin:0; font-size:18px;}
+.back-btn{
+  background:var(--accent);
+  border:none;
+  padding:8px 14px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:700;
+}
+.container{padding:16px;}
+.link-section, .team-section, .users-section{
+  background:var(--glass);
+  color:var(--text);
+  padding:16px;
+  border-radius:12px;
+  margin-bottom:16px;
+  backdrop-filter:blur(6px);
+}
+.link-section button, .users-section button{
+  margin:4px;
+  padding:8px 14px;
+  border:none;
+  border-radius:8px;
+  font-weight:700;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+/* Social buttons colors */
+.btn-whatsapp {
+  background:#25D366;
+  color:#fff;
+}
+.btn-facebook {
+  background:#1877F2;
+  color:#fff;
+}
+.btn-instagram {
+  background:#E1306C;
+  color:#fff;
+}
+.btn-tiktok {
+  background:#010101;
+  color:#fff;
+}
+.btn-telegram {
+  background:#0088CC;
+  color:#fff;
+}
+.btn-copy {
+  background:var(--accent);
+  color:#000;
+}
+
+.users-list{
+  margin-top:10px;
+}
+.user-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:6px 0;
+  border-bottom:1px solid rgba(255,255,255,0.2);
+}
+</style>
+</head>
+<body>
+
+<header>
+  <button class="back-btn" onclick="goBack()">← Back</button>
+  <h2>Affiliate</h2>
+</header>
+
+<div class="container">
+  <div class="link-section">
+    <h3>Your Invitation Link</h3>
+    <input type="text" id="inviteLink" readonly style="width:80%; padding:6px; border-radius:6px; border:none;">
+    <div>
+      <button class="btn-copy" onclick="copyLink()">
+        <i class="fas fa-copy"></i> Copy
+      </button>
+      <button class="btn-whatsapp" onclick="shareLink('whatsapp')">
+        <i class="fab fa-whatsapp"></i> WhatsApp
+      </button>
+      <button class="btn-facebook" onclick="shareLink('facebook')">
+        <i class="fab fa-facebook"></i> Facebook
+      </button>
+      <button class="btn-instagram" onclick="shareLink('instagram')">
+        <i class="fab fa-instagram"></i> Instagram
+      </button>
+      <button class="btn-tiktok" onclick="shareLink('tiktok')">
+        <i class="fab fa-tiktok"></i> TikTok
+      </button>
+      <button class="btn-telegram" onclick="shareLink('telegram')">
+        <i class="fab fa-telegram"></i> Telegram
+      </button>
+    </div>
+  </div>
+
+  <div class="team-section">
+    <h3>Team Management</h3>
+    <p>Team One: <span id="team1Count">0</span> active users (15%)</p>
+    <p>Team Two: <span id="team2Count">0</span> active users (3%)</p>
+    <p>Team Three: <span id="team3Count">0</span> active users (1%)</p>
+  </div>
+
+  <div class="users-section">
+    <h3>Users Joined via Your Link</h3>
+    <div class="users-list" id="usersList">
+      <!-- Users will appear here -->
+    </div>
+  </div>
+</div>
+
+<script src="./js/affiliate.js"></script>
+</body>
+</html>

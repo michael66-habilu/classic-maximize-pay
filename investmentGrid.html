@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Investment Grid | CLASSIC-MAXIMIZE PAY</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --milk:#f6f4ee;
+  --glass:rgba(0,0,0,0.45);
+  --accent:#ffbf00;
+  --text:#fff;
+}
+body{
+  margin:0;
+  font-family:'Roboto',sans-serif;
+  background:var(--milk);
+  color:#111;
+}
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px;
+  background:var(--glass);
+  backdrop-filter:blur(6px);
+}
+header h2{margin:0; font-size:18px;}
+.back-btn{
+  background:var(--accent);
+  border:none;
+  padding:8px 14px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:700;
+}
+.investment-grid{
+  padding:16px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:16px;
+}
+.plan{
+  background:var(--glass);
+  color:var(--text);
+  flex:1 1 45%;
+  padding:16px;
+  border-radius:12px;
+  backdrop-filter:blur(6px);
+  box-shadow:0 6px 18px rgba(0,0,0,0.25);
+}
+.plan h3{margin:0 0 10px;}
+.plan p{margin:4px 0;}
+.plan input{
+  width:80%;
+  padding:8px;
+  border-radius:6px;
+  border:none;
+  margin-top:6px;
+}
+.plan button{
+  margin-top:10px;
+  padding:10px 16px;
+  border:none;
+  border-radius:8px;
+  background:var(--accent);
+  color:#000;
+  font-weight:700;
+  cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <button class="back-btn" onclick="goBack()">← Back</button>
+  <h2>Investment Grid</h2>
+</header>
+
+<div class="investment-grid" id="investmentGrid">
+  <!-- Plans will be injected here -->
+</div>
+
+<script src="./js/investmentGrid.js"></script>
+</body>
+</html>

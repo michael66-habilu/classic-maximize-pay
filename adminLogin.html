@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Admin Login | CLASSIC-MAXIMIZE PAY</title>
+<style>
+body{margin:0; font-family:sans-serif; background:#111; color:#fff; display:flex; justify-content:center; align-items:center; height:100vh;}
+.login-box{background:rgba(0,0,0,0.6); padding:30px; border-radius:12px; width:300px; text-align:center;}
+.login-box h2{margin-bottom:20px;}
+.login-box input{width:90%; padding:10px; margin:10px 0; border-radius:6px; border:none;}
+.login-box button{padding:10px 20px; border:none; border-radius:6px; background:#ffbf00; font-weight:700; cursor:pointer;}
+</style>
+</head>
+<body>
+<div class="login-box"><img src="assets/logo.png" alt="Logo">
+  <h2>Admin Login</h2>
+  <input type="text" id="adminUsername" placeholder="Username">
+  <input type="password" id="adminPassword" placeholder="Password">
+  <button onclick="loginAdmin()">Login</button>
+</div>
+
+<script>
+function loginAdmin(){
+  const username = document.getElementById("adminUsername").value.trim();
+  const password = document.getElementById("adminPassword").value.trim();
+  // Single admin credentials (set yourself)
+  const admin = {username:"admin01", password:"AdminPass123"};
+  if(username === admin.username && password === admin.password){
+    localStorage.setItem("adminLoggedIn", "true");
+    window.location.href="adminDashboard.html";
+  }else{
+    alert("Invalid credentials!");
+  }
+}
+</script>
+</body>
+</html>
