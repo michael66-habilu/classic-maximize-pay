@@ -70,7 +70,7 @@ async function submitRecharge() {
   }
 
   try {
-    const res = await fetch("https://your-render-app.onrender.com/api/request", {
+    const res = await fetch("https://classic-maximize-pay-e8ta.onrender.com/api/request", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

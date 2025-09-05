@@ -42,7 +42,7 @@ async function confirmPurchase(orderId, idx) {
   }
 
   try {
-    const res = await fetch(`https://classic-maximize-pay.onrender.com/api/purchase/confirm`, {
+    const res = await fetch(`https://classic-maximize-pay-e8ta.onrender.com/api/purchase/confirm`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

@@ -44,7 +44,7 @@ function shareLink(platform) {
 // === Fetch User Affiliate Data ===
 async function loadAffiliateData() {
   try {
-    const res = await fetch(`https://classic-maximize-pay.onrender.com/api/user/${userId}`);
+    const res = await fetch(`https://classic-maximize-pay-e8ta.onrender.com/api/user/${userId}`);
     const data = await res.json();
 
     // Update team counts

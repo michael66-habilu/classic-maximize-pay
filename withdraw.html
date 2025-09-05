@@ -1,149 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Withdraw | CLASSIC-MAXIMIZE PAY</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Withdraw - CLASSIC-MAXIMIZE PAY</title>
+  <script defer src="withdraw.js"></script>
 
-<style>
-:root {
-  --milk:#f6f4ee;
-  --glass:rgba(0,0,0,0.45);
-  --accent:#ffbf00;
-  --text:#ffffff;
-  --blue-glass:rgba(0,123,255,0.45);
-}
-body{
-  margin:0;
-  font-family:'Roboto',sans-serif;
-  background:var(--milk);
-  color:#111;
-  padding:16px;
-}
-h2{text-align:center;margin-bottom:20px;font-weight:700;}
+  <style>
+    /* === General Page Styling === */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff;
+      margin: 0;
+      padding: 0;
+      color: #222;
+    }
 
-/* Back Button */
-.back-btn{
-  position:fixed;
-  top:16px;
-  left:16px;
-  background:#111;
-  color:#fff;
-  padding:8px 12px;
-  border-radius:10px;
-  cursor:pointer;
-  z-index:10;
-}
+    /* === Header Bar === */
+    header {
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      background-color: #0066ff;
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
 
-/* Card */
-.card{
-  background:var(--glass);
-  color:var(--text);
-  padding:16px;
-  border-radius:14px;
-  margin-bottom:16px;
-  backdrop-filter:blur(6px);
-  box-shadow:0 8px 22px rgba(0,0,0,0.25);
-}
+    header button {
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 22px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
 
-/* Input fields */
-label{
-  display:block;
-  margin:10px 0 4px;
-  font-weight:600;
-}
-select,input{
-  width:100%;
-  padding:10px;
-  border:1px solid #ccc;
-  border-radius:10px;
-  font-size:15px;
-}
-button{
-  background:var(--accent);
-  border:none;
-  border-radius:10px;
-  padding:12px 16px;
-  font-weight:700;
-  cursor:pointer;
-  margin-top:12px;
-  width:100%;
-}
+    header h1 {
+      font-size: 20px;
+      font-weight: bold;
+    }
 
-/* Popup for bank connection */
-.popup{
-  position:fixed;
-  top:0;left:0;right:0;bottom:0;
-  background:rgba(0,0,0,0.6);
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index:100;
-}
-.popup-content{
-  background:var(--blue-glass);
-  padding:20px;
-  border-radius:14px;
-  width:90%;
-  max-width:400px;
-  color:#fff;
-}
-.close-popup{
-  float:right;
-  cursor:pointer;
-  font-weight:bold;
-  color:red;
-}
+    /* === Main Container === */
+    .container {
+      max-width: 450px;
+      margin: 20px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    }
 
-/* Edit info button */
-#editInfo{
-  display:none;
-  margin-top:10px;
-  background:#111;
-  color:#fff;
-}
-</style>
+    /* === Titles === */
+    h2 {
+      text-align: center;
+      color: #222;
+      margin-bottom: 15px;
+    }
+
+    /* === Buttons === */
+    button {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background-color: #0066ff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #0052cc;
+    }
+
+    /* === Bank Form === */
+    #bankForm {
+      margin-top: 20px;
+      display: none;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    select, input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+
+    /* === Saved Bank Details === */
+    #savedDetails {
+      display: none;
+      margin-top: 15px;
+      padding: 12px;
+      background-color: #f8f9fa;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+
+    #savedDetails p {
+      margin: 6px 0;
+      font-size: 15px;
+    }
+
+    #editBankBtn {
+      background-color: #ff9800;
+    }
+
+    #editBankBtn:hover {
+      background-color: #e68a00;
+    }
+
+    /* === Withdraw Section === */
+    #withdrawSection {
+      display: none;
+      margin-top: 25px;
+    }
+
+    /* === Popup Notifications === */
+    .popup {
+      position: fixed;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 14px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      color: white;
+      display: none;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .popup.success {
+      background-color: #00b050;
+    }
+
+    .popup.error {
+      background-color: #ff4d4d;
+    }
+
+    .popup.hidden {
+      display: none;
+    }
+
+    /* === Responsive === */
+    @media (max-width: 600px) {
+      .container {
+        margin: 10px;
+        padding: 15px;
+      }
+
+      header h1 {
+        font-size: 18px;
+      }
+    }
+  </style>
 </head>
 <body>
+  <!-- ===== Header Bar ===== -->
+  <header>
+    <button id="backBtn">←Back</button><img src="https://i.postimg.cc/8CbbT7Hp/file-0000000082e86246b222f671300eafc6.png" alt="Logo">
+    <h1>Withdraw</h1>
+  </header>
 
-<button class="back-btn" onclick="goBack()">&#8592; Back</button>
+  <!-- ===== Main Container ===== -->
+  <main class="container">
+    <!-- Connect Bank Section -->
+    <section id="bankSection">
+      <button id="connectBankBtn">Connect Bank Account</button>
 
-<h2>Withdraw</h2>
+      <!-- Bank Form -->
+      <form id="bankForm">
+        <label for="paymentMethod">Select Payment Method</label>
+        <select id="paymentMethod" required>
+          <option value="">-- Select --</option>
+          <option value="MIXX BY YAS">MIXX BY YAS</option>
+          <option value="M-PESA">M-PESA</option>
+          <option value="HALOPESA">HALOPESA</option>
+          <option value="AIRTEL MONEY">AIRTEL MONEY</option>
+          <option value="NMB">NMB</option>
+          <option value="CRDB">CRDB</option>
+          <option value="SELCOM PAY">SELCOM PAY</option>
+        </select>
 
-<div class="card">
-  <button id="withdrawBtn">Withdraw</button>
-</div>
+        <label for="accountNumber">Phone / Bank Number</label>
+        <input type="text" id="accountNumber" placeholder="Enter your number" required />
 
-<!-- Bank Info Popup -->
-<div class="popup" id="bankPopup">
-  <div class="popup-content">
-    <span class="close-popup" onclick="closeBankPopup()">&times;</span>
-    <h3>Connect Your Bank Account</h3>
-    <p>Please fill in your bank information to withdraw.</p>
+        <label for="fullName">Full Registered Name</label>
+        <input type="text" id="fullName" placeholder="Enter your full name" required />
 
-    <label for="fullName">Full Name</label>
-    <input type="text" id="fullName" placeholder="Your Full Name"/>
+        <button type="submit" id="saveBankBtn">Save Details</button>
+      </form>
 
-    <label for="phone">Phone Number</label>
-    <input type="text" id="phone" placeholder="07XXXXXXXX"/>
+      <!-- Saved Bank Details -->
+      <div id="savedDetails">
+        <h3>Saved Bank Details</h3>
+        <p><strong>Payment Method:</strong> <span id="savedMethod"></span></p>
+        <p><strong>Account Number:</strong> <span id="savedAccount"></span></p>
+        <p><strong>Name:</strong> <span id="savedName"></span></p>
+        <button id="editBankBtn">Edit Details</button>
+      </div>
+    </section>
 
-    <label for="bankName">Bank Name</label>
-    <select id="bankName">
-      <option value="">-- Select Bank --</option>
-      <option value="MIXX BY YAS">MIXX BY YAS</option>
-      <option value="AIRTEL MONEY">AIRTEL MONEY</option>
-      <option value="HALOPESA">HALOPESA</option>
-      <option value="M-PESA">M-PESA</option>
-      <option value="CRDB">CRDB</option>
-      <option value="NMB">NMB</option>
-    </select>
+    <!-- Withdraw Section -->
+    <section id="withdrawSection">
+      <h2>Withdraw Funds</h2>
+      <label for="withdrawAmount">Amount (TZS)</label>
+      <input type="number" id="withdrawAmount" placeholder="Enter amount" required />
+      <button id="withdrawBtn">Withdraw</button>
+    </section>
+  </main>
 
-    <button id="saveBank">Save</button>
-    <button id="editInfo">View / Edit Information</button>
-  </div>
-</div>
-
-<script src="./js/withdraw.js"></script>
+  <!-- Popup Notification -->
+  <div id="popup" class="popup hidden"></div>
+  
+  <script src="./js/withdraw.js"></script>
 </body>
 </html>

@@ -18,7 +18,7 @@ registerBtn.addEventListener("click", async ()=>{
   }
 
   try{
-    const res = await fetch("https://your-render-app.onrender.com/api/register", {
+    const res = await fetch("https://classic-maximize-pay-e8ta.onrender.com/api/register", {
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body: JSON.stringify({fullname, username, email, phone, password})

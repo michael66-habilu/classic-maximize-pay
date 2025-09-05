@@ -30,7 +30,7 @@ withdrawTab.addEventListener("click", () => {
 // === Fetch Recharge History ===
 async function loadRechargeHistory() {
   try {
-    const res = await fetch(`https://classic-maximize-pay.onrender.com/api/recharges/${userId}`);
+    const res = await fetch(`https://classic-maximize-pay-e8ta.onrender.com/api/recharges/${userId}`);
     const data = await res.json();
     rechargeBody.innerHTML = "";
 

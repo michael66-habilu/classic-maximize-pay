@@ -5,7 +5,7 @@ const accUserId = localStorage.getItem("userId"); // assumed stored on login
 // ===== Fetch User Account Info =====
 async function loadAccount() {
   try {
-    const res = await fetch(`https://classic-maximize-pay.onrender.com/api/user/${accUserId}`);
+    const res = await fetch(`https://classic-maximize-pay-e8ta.onrender.com/api/user/${accUserId}`);
     const user = await res.json();
 
     document.getElementById("username").textContent = user.username;
@@ -22,7 +22,7 @@ async function loadAccount() {
 // ===== Claim Daily Earnings =====
 async function claimDailyEarnings() {
   try {
-    const res = await fetch(`https://classic-maximize-pay.onrender.com/api/claim-daily`, {
+    const res = await fetch(`https://classic-maximize-pay-e8ta.onrender.com/api/claim-daily`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId: accUserId })

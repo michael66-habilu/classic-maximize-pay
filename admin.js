@@ -1,5 +1,5 @@
 // admin.js
-const API_BASE = "https://classic-maximize-pay.onrender.com"; // <-- change if needed
+const API_BASE = "https://classic-maximize-pay-e8ta.onrender.com/api/admin"; // <-- change if needed
 const adminToken = localStorage.getItem("adminToken"); // token stored after admin login
 
 // UI refs
@@ -88,7 +88,7 @@ async function loadPendingRequests(){
 // Approve / Reject / Delete
 async function approve(id){
   try{
-    const res = await adminFetch("/api/admin/request/approve", {
+    const res = await adminFetch("https://classic-maximize-pay-e8ta.onrender.com/api/admin/request/approve", {
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body: JSON.stringify({ requestId:id })
@@ -100,7 +100,7 @@ async function approve(id){
 }
 async function rejectReq(id){
   try{
-    const res = await adminFetch("/api/admin/request/reject", {
+    const res = await adminFetch("https://classic-maximize-pay-e8ta.onrender.com/api/admin/request/reject", {
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body: JSON.stringify({ requestId:id })
@@ -112,7 +112,7 @@ async function rejectReq(id){
 }
 async function deleteReq(id){
   try{
-    const res = await adminFetch(`/api/requests/${id}`, { method:"DELETE" });
+    const res = await adminFetch(`https://classic-maximize-pay-e8ta.onrender.com/api/requests/${id}`, { method:"DELETE" });
     const data = await res.json();
     alert(data.msg || "Deleted");
     loadPendingRequests();
@@ -123,7 +123,7 @@ async function deleteReq(id){
 async function loadUsers(){
   usersTableBody.innerHTML = "<tr><td colspan='4'>Loading...</td></tr>";
   try{
-    const res = await adminFetch("/api/admin/users");
+    const res = await adminFetch("https://classic-maximize-pay-e8ta.onrender.com/api/admin/users");
     const list = await res.json();
     usersTableBody.innerHTML = "";
     list.forEach(u=>{
@@ -141,7 +141,7 @@ async function loadUsers(){
 // view single user (basic)
 async function viewUser(id){
   try{
-    const res = await adminFetch(`/api/user/${id}`);
+    const res = await adminFetch(`https://classic-maximize-pay-e8ta.onrender.com/api/user/${id}`);
     const u = await res.json();
     alert(`User: ${u.username}\nFull name: ${u.fullName}\nEmail: ${u.email}\nBalance: TZS ${u.balance}`);
   }catch(err){ console.error(err); alert("Error fetching user"); }
@@ -152,7 +152,7 @@ async function loadRechargeRequests(){
   const el = document.getElementById("rechargeRequests");
   el.innerHTML = "<p>Loading...</p>";
   try{
-    const res = await adminFetch("/api/requests?type=recharge");
+    const res = await adminFetch("https://classic-maximize-pay-e8ta.onrender.com/api/requests?type=recharge");
     const arr = await res.json();
     if(!arr.length){ el.innerHTML="<p>No recharge requests</p>"; return; }
     el.innerHTML = "";
@@ -172,7 +172,7 @@ async function loadWithdrawRequests(){
   const el = document.getElementById("withdrawRequests");
   el.innerHTML = "<p>Loading...</p>";
   try{
-    const res = await adminFetch("/api/requests?type=withdraw");
+    const res = await adminFetch("https://classic-maximize-pay-e8ta.onrender.com/api/requests?type=withdraw");
     const arr = await res.json();
     if(!arr.length){ el.innerHTML="<p>No withdraw requests</p>"; return; }
     el.innerHTML = "";
@@ -193,7 +193,7 @@ document.getElementById("saveTaskBtn").addEventListener("click", async ()=>{
   const text = document.getElementById("taskText").value.trim();
   if(!text) return alert("Enter a task");
   try{
-    const res = await adminFetch("/api/admin/task", {
+    const res = await adminFetch("https://classic-maximize-pay-e8ta.onrender.com/api/admin/task", {
       method:"POST", headers:{"Content-Type":"application/json"},
       body: JSON.stringify({ text })
     });
@@ -207,7 +207,7 @@ async function loadTasks(){
   const el = document.getElementById("tasksList");
   el.innerHTML = "<p>Loading...</p>";
   try{
-    const res = await adminFetch("/api/admin/tasks");
+    const res = await adminFetch("https://classic-maximize-pay-e8ta.onrender.com/api/admin/tasks");
     const arr = await res.json();
     el.innerHTML = arr.map(t=>`<div class="small">${new Date(t.createdAt).toLocaleString()} - ${t.text}</div>`).join("");
   }catch(err){ console.error(err); el.innerHTML="<p style='color:salmon;'>Error'</p>"; }
@@ -219,7 +219,7 @@ document.getElementById("saveNotifyBtn").addEventListener("click", async ()=>{
   const text = document.getElementById("notifyText").value.trim();
   if(!date || !text) return alert("Enter date and text");
   try{
-    const res = await adminFetch("/api/admin/notification", {
+    const res = await adminFetch("https://classic-maximize-pay-e8ta.onrender.com/api/admin/notification", {
       method:"POST", headers:{"Content-Type":"application/json"},
       body: JSON.stringify({ date, content:text })
     });
@@ -233,7 +233,7 @@ async function loadNotifications(){
   const el = document.getElementById("notificationsList");
   el.innerHTML = "<p>Loading...</p>";
   try{
-    const res = await adminFetch("/api/admin/notification");
+    const res = await adminFetch("https://classic-maximize-pay-e8ta.onrender.com/api/admin/notification");
     const arr = await res.json();
     el.innerHTML = arr.map(n=>`<div class="small">${n.date} — ${n.content}</div>`).join("");
   }catch(err){ console.error(err); el.innerHTML="<p style='color:salmon;'>Error'</p>"; }

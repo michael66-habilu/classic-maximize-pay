@@ -1,80 +1,117 @@
-const withdrawBtn = document.getElementById("withdrawBtn");
-const bankPopup = document.getElementById("bankPopup");
-const saveBankBtn = document.getElementById("saveBank");
-const editBtn = document.getElementById("editInfo");
+const apiBase = "https://classic-maximize-pay.onrender.com/api";
 
-// Show popup
-withdrawBtn.addEventListener("click", ()=>{
-  alert("Connect your bank account.");
-  bankPopup.style.display = "flex";
+// Back Button
+document.getElementById("backBtn").addEventListener("click", () => {
+  window.location.href = "dashboard.html";
 });
 
-// Close popup
-function closeBankPopup(){
-  bankPopup.style.display = "none";
+// Elements
+const connectBankBtn = document.getElementById("connectBankBtn");
+const bankForm = document.getElementById("bankForm");
+const savedDetailsDiv = document.getElementById("savedDetails");
+const savedMethod = document.getElementById("savedMethod");
+const savedAccount = document.getElementById("savedAccount");
+const savedName = document.getElementById("savedName");
+const editBankBtn = document.getElementById("editBankBtn");
+const withdrawSection = document.getElementById("withdrawSection");
+const withdrawBtn = document.getElementById("withdrawBtn");
+const popup = document.getElementById("popup");
+
+// Load User Info
+const user = JSON.parse(localStorage.getItem("user")) || {};
+const userId = user._id;
+
+// Load Saved Bank Info
+function loadBankDetails() {
+  const saved = JSON.parse(localStorage.getItem("bankDetails"));
+  if (saved) {
+    savedMethod.textContent = saved.method;
+    savedAccount.textContent = saved.account;
+    savedName.textContent = saved.name;
+
+    savedDetailsDiv.style.display = "block";
+    bankForm.style.display = "none";
+    withdrawSection.style.display = "block";
+  } else {
+    savedDetailsDiv.style.display = "none";
+    withdrawSection.style.display = "none";
+  }
 }
 
-// Save info & submit withdraw
-saveBankBtn.addEventListener("click", async ()=>{
-  const name = document.getElementById("fullName").value.trim();
-  const phone = document.getElementById("phone").value.trim();
-  const bank = document.getElementById("bankName").value;
-  const amount = parseFloat(document.getElementById("withdrawAmount").value);
+// Show Bank Form
+connectBankBtn.addEventListener("click", () => {
+  bankForm.style.display = "block";
+  savedDetailsDiv.style.display = "none";
+});
 
-  if(!name || !phone || !bank || !amount){
-    alert("Please fill in all fields and enter a valid amount.");
+// Save Bank Details
+bankForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const method = document.getElementById("paymentMethod").value;
+  const account = document.getElementById("accountNumber").value;
+  const name = document.getElementById("fullName").value;
+
+  if (!method || !account || !name) {
+    showPopup("Please fill all fields", "error");
     return;
   }
 
-  try{
-    const userId = localStorage.getItem("userId"); // Assumes userId is stored on login
-    const res = await fetch("https://your-render-app.onrender.com/api/request", {
+  const bankDetails = { method, account, name };
+  localStorage.setItem("bankDetails", JSON.stringify(bankDetails));
+  loadBankDetails();
+  showPopup("Bank details saved successfully!", "success");
+});
+
+// Edit Bank Details
+editBankBtn.addEventListener("click", () => {
+  bankForm.style.display = "block";
+  savedDetailsDiv.style.display = "none";
+  withdrawSection.style.display = "none";
+});
+
+// Withdraw Money
+withdrawBtn.addEventListener("click", async () => {
+  const amount = parseInt(document.getElementById("withdrawAmount").value);
+
+  if (isNaN(amount) || amount < 12000) {
+    showPopup("Minimum withdraw is 12,000 TZS", "error");
+    return;
+  }
+
+  try {
+    const res = await fetch(`${apiBase}/request`, {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         type: "withdraw",
         userId,
         amount,
-        bankName: bank,
-        fullName: name,
-        phone
-      })
+        transactionId: `WD-${Date.now()}`
+      }),
     });
 
     const data = await res.json();
-    if(data.success){
-      alert("✅ Withdraw request submitted. Wait for admin approval.");
-      editBtn.style.display = "block";
-      closeBankPopup();
-      document.getElementById("withdrawAmount").value = ""; // reset amount
+    if (res.ok) {
+      // Update balance locally
+      user.balance -= amount;
+      localStorage.setItem("user", JSON.stringify(user));
+
+      showPopup("Withdraw request submitted! Wait 1s - 24hrs.", "success");
     } else {
-      alert("Error: " + data.msg);
+      showPopup(data.msg || "Withdraw failed!", "error");
     }
-  }catch(err){
-    console.error(err);
-    alert("Error submitting withdraw request.");
+  } catch (error) {
+    showPopup("Network error!", "error");
   }
 });
 
-// Edit / view info
-editBtn.addEventListener("click", async ()=>{
-  try{
-    const userId = localStorage.getItem("userId");
-    const res = await fetch(`https://your-render-app.onrender.com/api/user/${userId}`);
-    const data = await res.json();
-    if(data.success && data.user){
-      document.getElementById("fullName").value = data.user.fullName || "";
-      document.getElementById("phone").value = data.user.phone || "";
-      document.getElementById("bankName").value = data.user.bankName || "";
-      bankPopup.style.display = "flex";
-    }
-  }catch(err){
-    console.error(err);
-    alert("Error fetching user info.");
-  }
-});
-
-// Back button
-function goBack(){
-  window.history.back();
+// Popup Notifications
+function showPopup(message, type) {
+  popup.textContent = message;
+  popup.className = `popup ${type}`;
+  popup.style.display = "block";
+  setTimeout(() => (popup.style.display = "none"), 3000);
 }
+
+// Initial Load
+loadBankDetails();

@@ -271,5 +271,13 @@ app.post("/api/claim-daily", async (req,res)=>{
     res.status(500).json({msg:"Server error"});
   }
 });
-// ---- SERVER LISTEN ----
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const http = require("http");
+const server = http.createServer(app);
+
+// Increase timeout for Render
+server.keepAliveTimeout = 120000; // 120 seconds
+server.headersTimeout = 120000;
+
+server.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server running on port ${PORT}`);
+});

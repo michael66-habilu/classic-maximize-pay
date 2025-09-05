@@ -35,7 +35,7 @@ async function invest(planId) {
   }
 
   try {
-    const res = await fetch("https://classic-maximize-pay.onrender.com/api/invest", {
+    const res = await fetch("https://classic-maximize-pay-e8ta.onrender.com/api/invest", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId, planId, amount })

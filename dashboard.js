@@ -17,7 +17,7 @@ function goToTransactions(){ window.location.href = "transactions.html"; }
 
 // ==== Dashboard Data Simulation ====
   async function loadDashboard(){
-  const res = await fetch(`https://your-render-app.onrender.com/api/userByUsername/${username}`);
+  const res = await fetch(`https://classic-maximize-pay-e8ta.onrender.com/api/userByUsername/${username}`);
   const user = await res.json();
   
   // Total Profit = all earnings from investments + affiliate (not reduced by recharge/purchase)
